@@ -1,5 +1,5 @@
 {
-	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+	"pages": [
 		{
 			"path": "pages/tabBar/home/home",
 			"style": {
@@ -7,13 +7,15 @@
 				"enablePullDownRefresh": true,
 				"onReachBottomDistance": 50,
 				"app-plus": {
-					"titleNView": false, //禁用原生导航栏
+					"titleNView": false,
 					"softinputNavBar": "none",
-					"subNVues": [{
-						"id": "homeTitleNvue", // 唯一标识  
-						"path": "pages/tabBar/home/subNvue/homeTitleNvue", // 页面路径  
-						"type": "navigationBar"
-					}]
+					"subNVues": [
+						{
+							"id": "homeTitleNvue",
+							"path": "pages/tabBar/home/subNvue/homeTitleNvue",
+							"type": "navigationBar"
+						}
+					]
 				}
 			}
 		},
@@ -22,9 +24,8 @@
 			"style": {
 				"navigationBarTextStyle": "black",
 				"app-plus": {
-					"titleNView": false, //禁用原生导航栏
+					"titleNView": false,
 					"bounce": "none"
-
 				}
 			}
 		},
@@ -34,13 +35,15 @@
 				"enablePullDownRefresh": true,
 				"navigationBarTextStyle": "black",
 				"app-plus": {
-					"titleNView": false, //禁用原生导航栏
+					"titleNView": false,
 					"softinputNavBar": "none",
-					"subNVues": [{
-						"id": "cartTitleNvue", // 唯一标识  
-						"path": "pages/tabBar/cart/subNvue/cartTitleNvue", // 页面路径  
-						"type": "navigationBar"
-					}]
+					"subNVues": [
+						{
+							"id": "cartTitleNvue",
+							"path": "pages/tabBar/cart/subNvue/cartTitleNvue",
+							"type": "navigationBar"
+						}
+					]
 				}
 			}
 		},
@@ -53,12 +56,14 @@
 				"backgroundColorTop": "#f06c7a",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
-					"titleNView": false, //禁用原生导航栏
-					"subNVues": [{
-						"id": "userTitleNvue", // 唯一标识  
-						"path": "pages/tabBar/user/subNvue/userTitleNvue", // 页面路径  
-						"type": "navigationBar"
-					}]
+					"titleNView": false,
+					"subNVues": [
+						{
+							"id": "userTitleNvue",
+							"path": "pages/tabBar/user/subNvue/userTitleNvue",
+							"type": "navigationBar"
+						}
+					]
 				}
 			}
 		},
@@ -82,7 +87,7 @@
 					"titleNView": false
 				},
 				"app-plus": {
-					"titleNView": false, //禁用原生导航栏
+					"titleNView": false,
 					"bounce": "none"
 				}
 			}
@@ -94,7 +99,7 @@
 				"navigationBarBackgroundColor": "#f06c7a",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
-					"bounce": "none", //关闭窗口回弹效果
+					"bounce": "none",
 					"softinputNavBar": "none"
 				}
 			}
@@ -106,7 +111,7 @@
 				"navigationBarBackgroundColor": "#f06c7a",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
-					"bounce": "none", //关闭窗口回弹效果
+					"bounce": "none",
 					"softinputNavBar": "none"
 				}
 			}
@@ -118,17 +123,19 @@
 				"navigationBarBackgroundColor": "#f06c7a",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
-					"bounce": "none", //关闭窗口回弹效果
+					"bounce": "none",
 					"softinputNavBar": "none"
 				}
 			}
-		}, {
+		},
+		{
 			"path": "pages/order/confirmation",
 			"style": {
 				"navigationBarTitleText": "确认订单",
 				"softinputNavBar": "none"
 			}
-		}, {
+		},
+		{
 			"path": "pages/user/order_list/order_list",
 			"style": {
 				"navigationBarTitleText": "我的订单",
@@ -136,7 +143,8 @@
 				"backgroundColorTop": "#f3f3f3",
 				"backgroundColorBottom": "#ffffff"
 			}
-		}, {
+		},
+		{
 			"path": "pages/user/setting/setting",
 			"style": {
 				"navigationBarBackgroundColor": "#f8f8f8",
@@ -144,7 +152,8 @@
 				"backgroundColorTop": "#ffffff",
 				"backgroundColorBottom": "#f3f3f3"
 			}
-		}, {
+		},
+		{
 			"path": "pages/user/myQR/myQR",
 			"style": {
 				"navigationBarTitleText": "我的二维码",
@@ -152,7 +161,8 @@
 					"bounce": "none"
 				}
 			}
-		}, {
+		},
+		{
 			"path": "pages/msg/msg",
 			"style": {
 				"enablePullDownRefresh": true,
@@ -160,7 +170,8 @@
 				"navigationBarBackgroundColor": "#f06c7a",
 				"navigationBarTextStyle": "white"
 			}
-		}, {
+		},
+		{
 			"path": "pages/msg/chat/chat",
 			"style": {
 				"navigationBarBackgroundColor": "#f2f2f2",
@@ -171,7 +182,8 @@
 					"bounce": "none"
 				}
 			}
-		}, {
+		},
+		{
 			"path": "pages/user/coupon/coupon",
 			"style": {
 				"navigationBarTitleText": "优惠券",
@@ -181,7 +193,8 @@
 					"bounce": "none"
 				}
 			}
-		}, {
+		},
+		{
 			"path": "pages/user/keep/keep",
 			"style": {
 				"navigationBarTitleText": "我的收藏",
@@ -191,7 +204,8 @@
 					"bounce": "none"
 				}
 			}
-		}, {
+		},
+		{
 			"path": "pages/user/address/address",
 			"style": {
 				"navigationBarBackgroundColor": "#ffffff",
@@ -199,7 +213,8 @@
 				"backgroundColorTop": "#ffffff",
 				"backgroundColorBottom": "#ffffff"
 			}
-		}, {
+		},
+		{
 			"path": "pages/user/address/edit/edit",
 			"style": {
 				"navigationBarBackgroundColor": "#ffffff",
@@ -207,7 +222,8 @@
 				"backgroundColorTop": "#ffffff",
 				"backgroundColorBottom": "#ffffff"
 			}
-		}, {
+		},
+		{
 			"path": "pages/user/deposit/deposit",
 			"style": {
 				"navigationBarBackgroundColor": "#ffffff",
@@ -215,7 +231,8 @@
 				"backgroundColorTop": "#ffffff",
 				"backgroundColorBottom": "#ffffff"
 			}
-		}, {
+		},
+		{
 			"path": "pages/pay/payment/payment",
 			"style": {
 				"navigationBarBackgroundColor": "#ffffff",
@@ -223,7 +240,8 @@
 				"backgroundColorTop": "#ffffff",
 				"backgroundColorBottom": "#ffffff"
 			}
-		}, {
+		},
+		{
 			"path": "pages/pay/success/success",
 			"style": {
 				"navigationBarBackgroundColor": "#ffffff",
@@ -231,7 +249,8 @@
 				"backgroundColorTop": "#ffffff",
 				"backgroundColorBottom": "#ffffff"
 			}
-		}, {
+		},
+		{
 			"path": "pages/goods/ratings/ratings",
 			"style": {
 				"navigationBarTitleText": "商品评论",
@@ -239,6 +258,13 @@
 				"onReachBottomDistance": 50,
 				"backgroundColorTop": "#ffffff",
 				"backgroundColorBottom": "#ffffff"
+			}
+		},
+		{
+			"path": "pages/search/search",
+			"style": {
+				"navigationBarTitleText": "搜索",
+				"enablePullDownRefresh": false
 			}
 		}
 	],
@@ -255,7 +281,8 @@
 		"selectedColor": "#f06c7a",
 		"borderStyle": "black",
 		"backgroundColor": "#ffffff",
-		"list": [{
+		"list": [
+			{
 				"pagePath": "pages/tabBar/home/home",
 				"iconPath": "static/img/tabBar/home.png",
 				"selectedIconPath": "static/img/tabBar/home-on.png",

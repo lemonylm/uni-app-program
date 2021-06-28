@@ -22,7 +22,8 @@
     "pages/user/deposit/deposit",
     "pages/pay/payment/payment",
     "pages/pay/success/success",
-    "pages/goods/ratings/ratings"
+    "pages/goods/ratings/ratings",
+    "pages/search/search"
   ],
   "subPackages": [],
   "window": {

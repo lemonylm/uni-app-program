@@ -1,7 +1,7 @@
 	export default function(url, data = {}, method = "GET") {
 		return new Promise((resolve, reject) => {
 			wx.request({
-				url: "http://localhost:3000" + url,
+				url: "http://192.168.25.32:3000" + url,
 				data,
 				method,
 				header: {
@@ -13,7 +13,6 @@
 				fail() {
 					reject(err.message)
 				}
-
 			})
 		})
 

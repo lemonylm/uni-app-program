@@ -79,39 +79,52 @@ export default {
 	methods: {
 		oauthLogin(provider) {
 			uni.showLoading();
-			//第三方登录
-			uni.login({
-				provider: provider,
-				success: loginRes => {
-					console.log('success: ' + JSON.stringify(loginRes));
-					//案例直接获取用户信息，一般不是在APP端直接获取用户信息，比如微信，获取一个code，传递给后端，后端再去请求微信服务器获取用户信息
-					uni.getUserInfo({
+			//第三方登录  先获取用户信息 然后拿着用户信息 给后端发请求注册
+			wx.getUserProfile({
+				desc: '用于完善会员资料',
+				// 获取信息成功的回调
+				success: infoRes => {
+					// 发送login请求
+					uni.login({
 						provider: provider,
-						success: infoRes => {
-							console.log('用户信息：' + JSON.stringify(infoRes.userInfo));
-							uni.setStorage({
-								key: 'UserInfo',
-								data: {
-									username: infoRes.userInfo.nickName,
-									face: infoRes.userInfo.avatarUrl,
-									signature: '个性签名',
-									integral: 0,
-									balance: 0,
-									envelope: 0
+						success: async res => {
+							// login成功的回调  获取code  然后向后端发请求注册
+							const result = await this.$API(
+								'/users/wxlogin',
+								{
+									code: res.code,
+									userInfo: infoRes.userInfo
 								},
-								success: function() {
-									uni.hideLoading();
-									uni.showToast({ title: '登录成功', icon: 'success' });
-									setTimeout(function() {
-										uni.navigateBack();
-									}, 300);
-								}
-							});
+								'POST'
+							);
+							// 如果返回200  想storage存储用户信息
+							if (result.code === 200) {
+								uni.setStorage({
+									key: 'UserInfo',
+									data: {
+										username: result.data.userInfo.username,
+										face: result.data.userInfo.avatarUrl,
+										signature: '个性签名',
+										integral: 0,
+										balance: 0,
+										envelope: 0
+									}
+								});
+								uni.setStorage({
+									key: 'Token',
+									data: result.data.token
+								});
+								uni.hideLoading();
+								uni.showToast({ title: '登录成功', icon: 'success' });
+								setTimeout(function() {
+									uni.navigateBack();
+								}, 300);
+							}
+						},
+						fail: e => {
+							console.log('fail: ' + JSON.stringify(e));
 						}
 					});
-				},
-				fail: e => {
-					console.log('fail: ' + JSON.stringify(e));
 				}
 			});
 		},
