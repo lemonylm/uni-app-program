@@ -23,8 +23,8 @@
       <view class="product-list">
         <view
           class="product"
-          v-for="goods in goodsList"
-          :key="goods._id"
+          v-for="(goods, index) in goodsList"
+          :key="index"
           @tap="toGoods(goods)"
         >
           <image mode="widthFix" :src="goods.imageInfo.whiteImage"></image>
@@ -45,6 +45,9 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
+      pageIndex: 0,
+      c3Id: "",
+      keyword: "",
       loadingText: "正在加载...",
       headerTop: "0px",
       headerPosition: "fixed",
@@ -63,7 +66,8 @@ export default {
   },
   onLoad: function (option) {
     //option为object类型，会序列化上个页面传递的参数
-    console.log(option.cid); //打印出上个页面传递的参数。
+    this.c3Id = option.id;
+    this.keyword = option.name;
     uni.setNavigationBarTitle({
       title: option.name,
     });
@@ -80,6 +84,7 @@ export default {
     }, 1);
     // #endif
   },
+
   onPageScroll(e) {
     //兼容iOS端下拉时顶部漂移
     if (e.scrollTop >= 0) {
@@ -91,62 +96,31 @@ export default {
   //下拉刷新，需要自己在page.json文件中配置开启页面下拉刷新 "enablePullDownRefresh": true
   onPullDownRefresh() {
     setTimeout(() => {
-      this.reload();
       uni.stopPullDownRefresh();
     }, 1000);
   },
   //上拉加载，需要自己在page.json文件中配置"onReachBottomDistance"
-  onReachBottom() {
-    uni.showToast({ title: "触发上拉加载" });
-    let len = this.goodsList.length;
-    if (len >= 40) {
-      this.loadingText = "到底了";
-      return false;
+  async onReachBottom() {
+    this.pageIndex++;
+    if (this.c3Id) {
+      await this.$store.dispatch("getCategoryGoodsList", {
+        category3Id: this.c3Id,
+        pageIndex: this.pageIndex,
+      });
     } else {
-      this.loadingText = "正在加载...";
+      await this.$store.dispatch("getGoodsList", {
+        category3Id: this.c3Id,
+        pageIndex: this.pageIndex,
+      });
     }
-    let end_goods_id = this.goodsList[len - 1].goods_id;
-    for (let i = 1; i <= 10; i++) {
-      let goods_id = end_goods_id + i;
-      let p = {
-        goods_id: goods_id,
-        img:
-          "/static/img/goods/p" +
-          (goods_id % 10 == 0 ? 10 : goods_id % 10) +
-          ".jpg",
-        name: "商品名称商品名称商品名称商品名称商品名称",
-        price: "￥168",
-        slogan: "1235人付款",
-      };
-      this.goodsList.push(p);
-    }
+
+    uni.showToast({ title: "加载成功" });
   },
   methods: {
-    reload() {
-      console.log("reload");
-      let tmpArr = [];
-      this.goodsList = [];
-      let end_goods_id = 0;
-      for (let i = 1; i <= 10; i++) {
-        let goods_id = end_goods_id + i;
-        let p = {
-          goods_id: goods_id,
-          img:
-            "/static/img/goods/p" +
-            (goods_id % 10 == 0 ? 10 : goods_id % 10) +
-            ".jpg",
-          name: "商品名称商品名称商品名称商品名称商品名称",
-          price: "￥168",
-          slogan: "1235人付款",
-        };
-        this.goodsList.push(p);
-      }
-    },
     //商品跳转
-    toGoods(e) {
-      uni.showToast({ title: "商品" + e.goods_id, icon: "none" });
+    toGoods(goods) {
       uni.navigateTo({
-        url: "../goods",
+        url: "../goods?skuId=" + goods.skuId,
       });
     },
     //排序类型

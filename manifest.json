@@ -54,7 +54,9 @@
             },
             "ios" : {},
             /* ios打包配置 */
-            "sdkConfigs" : {}
+            "sdkConfigs" : {
+                "maps" : {}
+            }
         }
     },
     /* SDK配置 */

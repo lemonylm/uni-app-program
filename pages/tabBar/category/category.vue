@@ -134,17 +134,27 @@ export default {
     showCategory(id) {
       this.showCategoryId = id;
     },
-    toCategory(e) {
-      uni.setStorageSync("catName", e.name);
-      uni.navigateTo({
-        url:
-          "../../goods/goods-list/goods-list?cid=" + e.id + "&name=" + e.name,
+    async toCategory(e) {
+      this.$store.commit("REMOVE_GOODS_LIST");
+      const res = await this.$store.dispatch("getCategoryGoodsList", {
+        category3Id: e.id,
       });
+      if (res) {
+        uni.navigateTo({
+          url: `/pages/goods/goods-list/goods-list?name=${e.name}&id=${e.id}`,
+        });
+      } else {
+        uni.showToast({
+          icon: "error",
+          title: "获取数据失败",
+          duration: 2000,
+        });
+      }
     },
     //搜索跳转
     toSearch() {
       uni.navigateTo({
-        url: "/pages/search/search",
+        url: `/pages/search/search`,
       });
     },
   },

@@ -318,13 +318,15 @@ page {
   text-align: center;
   font-size: 26rpx;
 }
-.goods-list .row .carrier .goods-info .info .price-number .number .sub, .goods-list .row .carrier .goods-info .info .price-number .number .add {
+.goods-list .row .carrier .goods-info .info .price-number .number .sub,
+.goods-list .row .carrier .goods-info .info .price-number .number .add {
   width: 45rpx;
   height: 45rpx;
   background-color: #f3f3f3;
   border-radius: 5rpx;
 }
-.goods-list .row .carrier .goods-info .info .price-number .number .sub .icon, .goods-list .row .carrier .goods-info .info .price-number .number .add .icon {
+.goods-list .row .carrier .goods-info .info .price-number .number .sub .icon,
+.goods-list .row .carrier .goods-info .info .price-number .number .add .icon {
   font-size: 22rpx;
   width: 45rpx;
   height: 45rpx;
@@ -374,7 +376,6 @@ page {
           align-items: center;
 }
 .footer .settlement {
-  width: 60%;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -386,7 +387,6 @@ page {
           align-items: center;
 }
 .footer .settlement .sum {
-  width: 50%;
   font-size: 28rpx;
   margin-right: 10rpx;
   display: -webkit-box;

@@ -81,7 +81,7 @@ export default {
         });
         if (res) {
           uni.navigateTo({
-            url: "/pages/goods/goods-list/goods-list",
+            url: `/pages/goods/goods-list/goods-list?name=${this.inputVal.trim()}`,
           });
         } else {
           uni.showToast({

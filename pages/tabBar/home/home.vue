@@ -122,8 +122,8 @@
       <view class="product-list">
         <view
           class="product"
-          v-for="product in goodsList"
-          :key="product._id"
+          v-for="(product,index) in goodsList"
+          :key="index"
           @tap="toGoods(product)"
         >
           <image mode="widthFix" :src="product.imageInfo.whiteImage"></image>
@@ -273,17 +273,20 @@ export default {
     this.statusHeight = plus.navigator.getStatusbarHeight();
     // #endif
     // this.amapPlugin = new amap.AMapWX({
-    // 	//高德地图KEY，随时失效，请务必替换为自己的KEY，参考：http://ask.dcloud.net.cn/article/35070
-    // 	key: '7c235a9ac4e25e482614c6b8eac6fd8e'
+    //   //高德地图KEY，随时失效，请务必替换为自己的KEY，参考：http://ask.dcloud.net.cn/article/35070
+    //   key: "93d2e2044d64839c512f72966d85d111",
     // });
     // //定位地址
     // this.amapPlugin.getRegeo({
-    // 	success: data => {
-    // 		this.city = data[0].regeocodeData.addressComponent.city.replace(/市/g, ''); //把"市"去掉
-    // 		// #ifdef APP-PLUS
-    // 		this.nVueTitle.postMessage({ type: 'location', city: this.city });
-    // 		// #endif
-    // 	}
+    //   success: (data) => {
+    //     this.city = data[0].regeocodeData.addressComponent.city.replace(
+    //       /市/g,
+    //       ""
+    //     ); //把"市"去掉
+    //     // #ifdef APP-PLUS
+    //     this.nVueTitle.postMessage({ type: "location", city: this.city });
+    //     // #endif
+    //   },
     // });
     //开启定时器
     this.Timer();

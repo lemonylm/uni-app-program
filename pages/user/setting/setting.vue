@@ -77,7 +77,7 @@
           ></view>
         </view>
         <view class="row setting-logout"
-          ><button type="warn">退出登录</button></view
+          ><button type="warn" @click="logout">退出登录</button></view
         >
       </view>
     </view>
@@ -107,6 +107,23 @@ export default {
         signature: userInfo.signature,
         username: userInfo.username,
       };
+    },
+    // 退出登录
+    logout() {
+      uni.removeStorageSync("Token");
+      uni.removeStorageSync("UserInfo");
+      uni.removeStorage({
+        key: "Token",
+        success: function (res) {
+          uni.showToast({
+            title: "退出成功",
+            duration: 2000,
+          });
+          uni.reLaunch({
+            url: "/pages/tabBar/user/user",
+          });
+        },
+      });
     },
   },
   mounted() {
