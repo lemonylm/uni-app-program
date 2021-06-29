@@ -130,61 +130,71 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _vuex = __webpack_require__(/*! vuex */ 13);function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
 {
   data: function data() {
     return {
-      goodsList: [
-      { goods_id: 0, img: '/static/img/goods/p1.jpg', name: '商品名称商品名称商品名称商品名称商品名称', price: '￥168', slogan: '1235人付款' },
-      { goods_id: 1, img: '/static/img/goods/p2.jpg', name: '商品名称商品名称商品名称商品名称商品名称', price: '￥168', slogan: '1235人付款' },
-      { goods_id: 2, img: '/static/img/goods/p3.jpg', name: '商品名称商品名称商品名称商品名称商品名称', price: '￥168', slogan: '1235人付款' },
-      { goods_id: 3, img: '/static/img/goods/p4.jpg', name: '商品名称商品名称商品名称商品名称商品名称', price: '￥168', slogan: '1235人付款' },
-      { goods_id: 4, img: '/static/img/goods/p5.jpg', name: '商品名称商品名称商品名称商品名称商品名称', price: '￥168', slogan: '1235人付款' },
-      { goods_id: 5, img: '/static/img/goods/p6.jpg', name: '商品名称商品名称商品名称商品名称商品名称', price: '￥168', slogan: '1235人付款' },
-      { goods_id: 6, img: '/static/img/goods/p7.jpg', name: '商品名称商品名称商品名称商品名称商品名称', price: '￥168', slogan: '1235人付款' },
-      { goods_id: 7, img: '/static/img/goods/p8.jpg', name: '商品名称商品名称商品名称商品名称商品名称', price: '￥168', slogan: '1235人付款' },
-      { goods_id: 8, img: '/static/img/goods/p9.jpg', name: '商品名称商品名称商品名称商品名称商品名称', price: '￥168', slogan: '1235人付款' },
-      { goods_id: 9, img: '/static/img/goods/p10.jpg', name: '商品名称商品名称商品名称商品名称商品名称', price: '￥168', slogan: '1235人付款' }],
-
       loadingText: "正在加载...",
       headerTop: "0px",
       headerPosition: "fixed",
       orderbyList: [
       { text: "销量", selected: true, orderbyicon: false, orderby: 0 },
-      { text: "价格", selected: false, orderbyicon: ['sheng', 'jiang'], orderby: 0 },
+      {
+        text: "价格",
+        selected: false,
+        orderbyicon: ["sheng", "jiang"],
+        orderby: 0 },
+
       { text: "好评", selected: false, orderbyicon: false, orderby: 0 }],
 
       orderby: "sheng" };
 
   },
-  onLoad: function onLoad(option) {//option为object类型，会序列化上个页面传递的参数
+  onLoad: function onLoad(option) {
+    //option为object类型，会序列化上个页面传递的参数
     console.log(option.cid); //打印出上个页面传递的参数。
     uni.setNavigationBarTitle({
       title: option.name });
@@ -219,7 +229,7 @@ var _default =
   },
   //上拉加载，需要自己在page.json文件中配置"onReachBottomDistance"
   onReachBottom: function onReachBottom() {
-    uni.showToast({ title: '触发上拉加载' });
+    uni.showToast({ title: "触发上拉加载" });
     var len = this.goodsList.length;
     if (len >= 40) {
       this.loadingText = "到底了";
@@ -230,7 +240,16 @@ var _default =
     var end_goods_id = this.goodsList[len - 1].goods_id;
     for (var i = 1; i <= 10; i++) {
       var goods_id = end_goods_id + i;
-      var p = { goods_id: goods_id, img: '/static/img/goods/p' + (goods_id % 10 == 0 ? 10 : goods_id % 10) + '.jpg', name: '商品名称商品名称商品名称商品名称商品名称', price: '￥168', slogan: '1235人付款' };
+      var p = {
+        goods_id: goods_id,
+        img:
+        "/static/img/goods/p" + (
+        goods_id % 10 == 0 ? 10 : goods_id % 10) +
+        ".jpg",
+        name: "商品名称商品名称商品名称商品名称商品名称",
+        price: "￥168",
+        slogan: "1235人付款" };
+
       this.goodsList.push(p);
     }
   },
@@ -242,25 +261,35 @@ var _default =
       var end_goods_id = 0;
       for (var i = 1; i <= 10; i++) {
         var goods_id = end_goods_id + i;
-        var p = { goods_id: goods_id, img: '/static/img/goods/p' + (goods_id % 10 == 0 ? 10 : goods_id % 10) + '.jpg', name: '商品名称商品名称商品名称商品名称商品名称', price: '￥168', slogan: '1235人付款' };
+        var p = {
+          goods_id: goods_id,
+          img:
+          "/static/img/goods/p" + (
+          goods_id % 10 == 0 ? 10 : goods_id % 10) +
+          ".jpg",
+          name: "商品名称商品名称商品名称商品名称商品名称",
+          price: "￥168",
+          slogan: "1235人付款" };
+
         this.goodsList.push(p);
       }
     },
     //商品跳转
     toGoods: function toGoods(e) {
-      uni.showToast({ title: '商品' + e.goods_id, icon: "none" });
+      uni.showToast({ title: "商品" + e.goods_id, icon: "none" });
       uni.navigateTo({
-        url: '../goods' });
+        url: "../goods" });
 
     },
     //排序类型
     select: function select(index) {
       var tmpTis = this.orderbyList[index].text + "排序 ";
       if (this.orderbyList[index].orderbyicon) {
-        var type = this.orderbyList[index].orderby == 0 ? '升序' : '降序';
+        var type = this.orderbyList[index].orderby == 0 ? "升序" : "降序";
         if (this.orderbyList[index].selected) {
-          type = this.orderbyList[index].orderby == 0 ? '降序' : '升序';
-          this.orderbyList[index].orderby = this.orderbyList[index].orderby == 0 ? 1 : 0;
+          type = this.orderbyList[index].orderby == 0 ? "降序" : "升序";
+          this.orderbyList[index].orderby =
+          this.orderbyList[index].orderby == 0 ? 1 : 0;
         }
         tmpTis += type;
       }
@@ -272,7 +301,11 @@ var _default =
         }
       }
       uni.showToast({ title: tmpTis, icon: "none" });
-    } } };exports.default = _default;
+    } },
+
+  computed: _objectSpread({},
+  (0, _vuex.mapState)({
+    goodsList: function goodsList(state) {return state.goods.goodsList;} })) };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

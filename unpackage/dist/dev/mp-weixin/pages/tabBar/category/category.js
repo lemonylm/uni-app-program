@@ -185,13 +185,26 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 var _amapWx = _interopRequireDefault(__webpack_require__(/*! @/common/SDK/amap-wx.js */ 24));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var _default =
 {
   data: function data() {
     return {
-      showCategoryId: '',
-      headerPosition: 'fixed',
-      city: '北京',
+      showCategoryId: "",
+      showCategory2Id: "",
+      headerPosition: "fixed",
+      city: "北京",
       //分类列表
       category1List: [],
       category2List: [],
@@ -201,9 +214,9 @@ var _amapWx = _interopRequireDefault(__webpack_require__(/*! @/common/SDK/amap-w
   onPageScroll: function onPageScroll(e) {
     //兼容iOS端下拉时顶部漂移
     if (e.scrollTop >= 0) {
-      this.headerPosition = 'fixed';
+      this.headerPosition = "fixed";
     } else {
-      this.headerPosition = 'absolute';
+      this.headerPosition = "absolute";
     }
   },
   onLoad: function onLoad() {
@@ -224,7 +237,7 @@ var _amapWx = _interopRequireDefault(__webpack_require__(/*! @/common/SDK/amap-w
   methods: {
     //获取左侧列表
     getCategory1List: function getCategory1List() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.next = 2;return (
-                  _this.$API('/category/category_one'));case 2:res = _context.sent;
+                  _this.$API("/category/category_one"));case 2:res = _context.sent;
                 if (res.code === 200) {
                   _this.category1List = res.data.category1List;
                   _this.showCategoryId = res.data.category1List[0].id;
@@ -232,13 +245,13 @@ var _amapWx = _interopRequireDefault(__webpack_require__(/*! @/common/SDK/amap-w
     },
     //获取左侧列表
     getCategory2List: function getCategory2List() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var res;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:_context2.next = 2;return (
-                  _this2.$API('/category/category_two'));case 2:res = _context2.sent;
+                  _this2.$API("/category/category_two"));case 2:res = _context2.sent;
                 if (res.code === 200) {
                   _this2.category2List = res.data.category2List;
                 }case 4:case "end":return _context2.stop();}}}, _callee2);}))();
     },
     getCategory3List: function getCategory3List() {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var res;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:_context3.next = 2;return (
-                  _this3.$API('/category/category_three'));case 2:res = _context3.sent;
+                  _this3.$API("/category/category_three"));case 2:res = _context3.sent;
                 if (res.code === 200) {
                   _this3.category3List = res.data.category3List;
                 }case 4:case "end":return _context3.stop();}}}, _callee3);}))();
@@ -246,7 +259,7 @@ var _amapWx = _interopRequireDefault(__webpack_require__(/*! @/common/SDK/amap-w
     //消息列表
     toMsg: function toMsg() {
       uni.navigateTo({
-        url: '../../msg/msg' });
+        url: "../../msg/msg" });
 
     },
     //分类切换显示
@@ -254,17 +267,33 @@ var _amapWx = _interopRequireDefault(__webpack_require__(/*! @/common/SDK/amap-w
       this.showCategoryId = id;
     },
     toCategory: function toCategory(e) {
-      uni.setStorageSync('catName', e.name);
+      uni.setStorageSync("catName", e.name);
       uni.navigateTo({
-        url: '../../goods/goods-list/goods-list?cid=' + e.id + '&name=' + e.name });
+        url:
+        "../../goods/goods-list/goods-list?cid=" + e.id + "&name=" + e.name });
 
     },
     //搜索跳转
     toSearch: function toSearch() {
       uni.navigateTo({
-        url: '/pages/search/search' });
+        url: "/pages/search/search" });
 
-    } } };exports.default = _default;
+    } },
+
+  computed: {
+    // 筛选2级分类列表
+    fmtCategory2List: function fmtCategory2List() {var _this4 = this;
+      return this.category2List.filter(
+      function (item) {return item.parentId === _this4.showCategoryId;});
+
+    }
+    // // 筛选3级分类列表
+    // fmtCategory3List() {
+    //   return this.category3List.filter(
+    //     (item) => item.parentId === this.showCategory2Id
+    //   );
+    // },
+  } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

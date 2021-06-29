@@ -106,10 +106,12 @@
   box-shadow: 0rpx 5rpx 25rpx rgba(0, 0, 0, 0.1);
 }
 .goods-list .product-list .product image {
-  width: 100%;
+  width: 43vw;
+  height: 43vw;
   border-radius: 20rpx 20rpx 0 0;
 }
 .goods-list .product-list .product .name {
+  height: 80rpx;
   width: 92%;
   padding: 10rpx 4%;
   display: -webkit-box;

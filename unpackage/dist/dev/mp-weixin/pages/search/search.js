@@ -97,6 +97,11 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  if (!_vm._isMounted) {
+    _vm.e0 = function($event) {
+      _vm.isShow = !_vm.isShow
+    }
+  }
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -130,7 +135,22 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 21));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};} //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -164,41 +184,69 @@ var _default =
 {
   data: function data() {
     return {
-      inputVal: '',
+      isShow: true,
+      firstFocus: false,
+      inputVal: "",
       recentList: [],
       hotList: [] };
 
   },
   methods: {
     // 初始化数据
-    initData: function initData() {
-      this.recentList = wx.getStorageSync('RECENT_LIST') || [];
-      this.hotList = wx.getStorageSync('HOT_LIST') || [];
+    initData: function initData() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+                _this.recentList = wx.getStorageSync("RECENT_LIST") || [];_context.next = 3;return (
+                  _this.$API("/goods/hot_search"));case 3:res = _context.sent;
+                if (res.code === 200) {
+                  _this.hotList = res.data;
+                }case 5:case "end":return _context.stop();}}}, _callee);}))();
     },
     // 点击搜索 跳转页面 同时给storage添加历史记录
-    search: function search() {
-      var val = this.inputVal.trim();
-      // 变更list
-      if (val) {
-        var index = this.recentList.findIndex(function (item) {return item === val;});
-        if (index >= 0) {
-          this.recentList.splice(index, 1);
-        }
-        this.recentList.unshift(val);
-        this.inputVal = '';
-        wx.setStorageSync('RECENT_LIST', this.recentList);
-        // 发送请求 跳转的逻辑
-      } else {
-        wx.showToast({
-          title: '请勿输入空信息',
-          icon: 'error' });
+    search: function search() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var val, index, res;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
+                val = _this2.inputVal.trim();
+                // 变更list
+                if (!val) {_context2.next = 13;break;}
+                index = _this2.recentList.findIndex(function (item) {return item === val;});
+                if (index >= 0) {
+                  _this2.recentList.splice(index, 1);
+                }
+                _this2.recentList.unshift(val);
+                wx.setStorageSync("RECENT_LIST", _this2.recentList);
+                // 发送请求 跳转的逻辑
+                _this2.$store.commit("REMOVE_GOODS_LIST");_context2.next = 9;return (
+                  _this2.$store.dispatch("getGoodsList", {
+                    keyword: _this2.inputVal.trim() }));case 9:res = _context2.sent;
 
-      }
+                if (res) {
+                  uni.navigateTo({
+                    url: "/pages/goods/goods-list/goods-list" });
+
+                } else {
+                  uni.showToast({
+                    icon: "error",
+                    title: "搜索失败",
+                    duration: 2000 });
+
+                }_context2.next = 14;break;case 13:
+
+                wx.showToast({
+                  title: "请勿输入空信息",
+                  icon: "error" });case 14:
+
+
+                _this2.inputVal = "";case 15:case "end":return _context2.stop();}}}, _callee2);}))();
+    },
+    // 删除
+    remove: function remove() {
+      this.recentList = [];
+      uni.setStorageSync("RECENT_LIST", this.recentList);
     } },
 
   mounted: function mounted() {
     this.initData();
+    // 自动获取焦点
+    this.firstFocus = true;
   } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

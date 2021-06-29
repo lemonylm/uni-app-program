@@ -122,15 +122,15 @@
       <view class="product-list">
         <view
           class="product"
-          v-for="product in productList"
-          :key="product.goods_id"
+          v-for="product in goodsList"
+          :key="product._id"
           @tap="toGoods(product)"
         >
-          <image mode="widthFix" :src="product.img"></image>
-          <view class="name">{{ product.name }}</view>
+          <image mode="widthFix" :src="product.imageInfo.whiteImage"></image>
+          <view class="name">{{ product.skuName }}</view>
           <view class="info">
-            <view class="price">{{ product.price }}</view>
-            <view class="slogan">{{ product.slogan }}</view>
+            <view class="price">{{ product.priceInfo.price }}</view>
+            <view class="slogan">{{ product.comments + "人评价" }}</view>
           </view>
         </view>
       </view>
@@ -155,32 +155,13 @@ export default {
       city: "北京",
       currentSwiper: 0,
       // 轮播图片
-      swiperList: [
-        // { id: 1, src: 'url1', img: '/static/img/1.jpg' },
-        // { id: 2, src: 'url2', img: '/static/img/2.jpg' },
-        // { id: 3, src: 'url3', img: '/static/img/3.jpg' }
-      ],
+      swiperList: [],
       // 分类菜单
-      categoryList: [
-        // { id: 1, name: '办公', img: '/static/img/category/1.png' },
-        // { id: 2, name: '家电', img: '/static/img/category/2.png' },
-        // { id: 3, name: '服饰', img: '/static/img/category/3.png' },
-        // { id: 4, name: '日用', img: '/static/img/category/4.png' },
-        // { id: 5, name: '蔬果', img: '/static/img/category/5.png' },
-        // { id: 6, name: '运动', img: '/static/img/category/6.png' },
-        // { id: 7, name: '书籍', img: '/static/img/category/7.png' },
-        // { id: 8, name: '文具', img: '/static/img/category/8.png' },
-        // { id: 1, name: '办公', img: '/static/img/category/1.png' },
-        // { id: 2, name: '家电', img: '/static/img/category/2.png' },
-        // { id: 3, name: '服饰', img: '/static/img/category/3.png' },
-        // { id: 4, name: '日用', img: '/static/img/category/4.png' },
-        // { id: 5, name: '蔬果', img: '/static/img/category/5.png' },
-        // { id: 6, name: '运动', img: '/static/img/category/6.png' },
-        // { id: 7, name: '书籍', img: '/static/img/category/7.png' },
-        // { id: 8, name: '文具', img: '/static/img/category/8.png' }
-      ],
+      categoryList: [],
       Promotion: [],
       //猜你喜欢列表
+      goodsList: [],
+      pageIndex: 0,
       productList: [
         {
           goods_id: 0,
@@ -263,41 +244,23 @@ export default {
     this.statusTop = e.scrollTop >= 0 ? null : -this.statusHeight + "px";
   },
   //下拉刷新，需要自己在page.json文件中配置开启页面下拉刷新 "enablePullDownRefresh": true
-  onPullDownRefresh() {
-    setTimeout(function () {
-      uni.stopPullDownRefresh();
-    }, 1000);
+  async onPullDownRefresh() {
+    await this.initData();
+    uni.showToast({
+      title: "刷新成功",
+      duration: 1000,
+    });
+    uni.stopPullDownRefresh();
   },
   //上拉加载，需要自己在page.json文件中配置"onReachBottomDistance"
-  onReachBottom() {
-    uni.showToast({ title: "触发上拉加载" });
-    let len = this.productList.length;
-    if (len >= 40) {
-      this.loadingText = "到底了";
-      return false;
-    }
-    // 演示,随机加入商品,生成环境请替换为ajax请求
-    let end_goods_id = this.productList[len - 1].goods_id;
-    for (let i = 1; i <= 10; i++) {
-      let goods_id = end_goods_id + i;
-      let p = {
-        goods_id: goods_id,
-        img:
-          "/static/img/goods/p" +
-          (goods_id % 10 == 0 ? 10 : goods_id % 10) +
-          ".jpg",
-        name: "商品名称商品名称商品名称商品名称商品名称",
-        price: "￥168",
-        slogan: "1235人付款",
-      };
-      this.productList.push(p);
-    }
+  async onReachBottom() {
+    this.pageIndex++;
+    await this.getGoodsList();
+    uni.showToast({ title: "加载成功" });
   },
   onLoad() {
-    // 获取首页nav轮播图列表
-    this.getNavList();
-    // 获取首页主轮播图列表
-    this.getBannerList();
+    // 初始化数据
+    this.initData();
     // #ifdef APP-PLUS
     this.nVueTitle = uni.getSubNVueById("homeTitleNvue");
     this.nVueTitle.onMessage((res) => {
@@ -328,6 +291,12 @@ export default {
     this.loadPromotion();
   },
   methods: {
+    // 初始化数据
+    async initData() {
+      await this.getNavList();
+      await this.getBannerList();
+      await this.getGoodsList();
+    },
     // 获取首页主轮播图列表
     async getBannerList() {
       const res = await this.$API("/home/banner");
@@ -339,15 +308,23 @@ export default {
       const res = await this.$API("/home/mallnav");
       if (res.code === 200) {
         const size = 8;
-        const pages = math.ceil(res.data.length / size);
+        const pages = Math.ceil(res.data.length / size);
         let categoryList = [];
         let num = 1;
         while (pages >= num) {
-          res.push(res.data.slice(size * num - 1, size * num));
+          categoryList.push(res.data.slice(size * (num - 1), size * num));
           num++;
         }
-
         this.categoryList = categoryList;
+      }
+    },
+    // 获取首页goodsList
+    async getGoodsList() {
+      const res = await this.$API("/goods/search_goods", {
+        pageIndex: this.pageIndex,
+      });
+      if (res.code === 200) {
+        this.goodsList = this.goodsList.concat(res.data.goodsList);
       }
     },
     //加载Promotion 并设定倒计时,,实际应用中应该是ajax加载此数据。
@@ -628,7 +605,7 @@ page {
       bottom: 20upx;
       left: 20upx;
       background-color: rgba(255, 255, 255, 0.4);
-      width: 150upx;
+      width: 640upx;
       height: 5upx;
       border-radius: 3upx;
       overflow: hidden;
@@ -811,10 +788,12 @@ page {
       margin: 0 0 15upx 0;
       box-shadow: 0upx 5upx 25upx rgba(0, 0, 0, 0.1);
       image {
-        width: 100%;
+        width: 43vw;
+        height: 43vw;
         border-radius: 20upx 20upx 0 0;
       }
       .name {
+        height: 80upx;
         width: 92%;
         padding: 10upx 4%;
         display: -webkit-box;

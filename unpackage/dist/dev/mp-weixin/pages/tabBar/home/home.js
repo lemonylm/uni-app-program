@@ -427,34 +427,13 @@ var _amapWx = _interopRequireDefault(__webpack_require__(/*! @/common/SDK/amap-w
 var ttt = 0; //高德SDK
 var _default = { data: function data() {return { showHeader: true, afterHeaderOpacity: 1, //不透明度
       headerPosition: "fixed", headerTop: null, statusTop: null, nVueTitle: null, city: "北京", currentSwiper: 0, // 轮播图片
-      swiperList: [// { id: 1, src: 'url1', img: '/static/img/1.jpg' },
-        // { id: 2, src: 'url2', img: '/static/img/2.jpg' },
-        // { id: 3, src: 'url3', img: '/static/img/3.jpg' }
-      ], // 分类菜单
-      categoryList: [// { id: 1, name: '办公', img: '/static/img/category/1.png' },
-        // { id: 2, name: '家电', img: '/static/img/category/2.png' },
-        // { id: 3, name: '服饰', img: '/static/img/category/3.png' },
-        // { id: 4, name: '日用', img: '/static/img/category/4.png' },
-        // { id: 5, name: '蔬果', img: '/static/img/category/5.png' },
-        // { id: 6, name: '运动', img: '/static/img/category/6.png' },
-        // { id: 7, name: '书籍', img: '/static/img/category/7.png' },
-        // { id: 8, name: '文具', img: '/static/img/category/8.png' },
-        // { id: 1, name: '办公', img: '/static/img/category/1.png' },
-        // { id: 2, name: '家电', img: '/static/img/category/2.png' },
-        // { id: 3, name: '服饰', img: '/static/img/category/3.png' },
-        // { id: 4, name: '日用', img: '/static/img/category/4.png' },
-        // { id: 5, name: '蔬果', img: '/static/img/category/5.png' },
-        // { id: 6, name: '运动', img: '/static/img/category/6.png' },
-        // { id: 7, name: '书籍', img: '/static/img/category/7.png' },
-        // { id: 8, name: '文具', img: '/static/img/category/8.png' }
-      ], Promotion: [], //猜你喜欢列表
-      productList: [{ goods_id: 0, img: "/static/img/goods/p1.jpg", name: "商品名称商品名称商品名称商品名称商品名称", price: "￥168", slogan: "1235人付款" }, { goods_id: 1, img: "/static/img/goods/p2.jpg", name: "商品名称商品名称商品名称商品名称商品名称", price: "￥168", slogan: "1235人付款" }, { goods_id: 2, img: "/static/img/goods/p3.jpg", name: "商品名称商品名称商品名称商品名称商品名称", price: "￥168", slogan: "1235人付款" }, { goods_id: 3, img: "/static/img/goods/p4.jpg", name: "商品名称商品名称商品名称商品名称商品名称", price: "￥168", slogan: "1235人付款" }, { goods_id: 4, img: "/static/img/goods/p5.jpg", name: "商品名称商品名称商品名称商品名称商品名称", price: "￥168", slogan: "1235人付款" }, { goods_id: 5, img: "/static/img/goods/p6.jpg", name: "商品名称商品名称商品名称商品名称商品名称", price: "￥168", slogan: "1235人付款" }, { goods_id: 6, img: "/static/img/goods/p7.jpg", name: "商品名称商品名称商品名称商品名称商品名称", price: "￥168", slogan: "1235人付款" }, { goods_id: 7, img: "/static/img/goods/p8.jpg", name: "商品名称商品名称商品名称商品名称商品名称", price: "￥168", slogan: "1235人付款" }, { goods_id: 8, img: "/static/img/goods/p9.jpg", name: "商品名称商品名称商品名称商品名称商品名称", price: "￥168", slogan: "1235人付款" }, { goods_id: 9, img: "/static/img/goods/p10.jpg", name: "商品名称商品名称商品名称商品名称商品名称", price: "￥168", slogan: "1235人付款" }], loadingText: "正在加载..." };}, onPageScroll: function onPageScroll(e) {//兼容iOS端下拉时顶部漂移
+      swiperList: [], // 分类菜单
+      categoryList: [], Promotion: [], //猜你喜欢列表
+      goodsList: [], pageIndex: 0, productList: [{ goods_id: 0, img: "/static/img/goods/p1.jpg", name: "商品名称商品名称商品名称商品名称商品名称", price: "￥168", slogan: "1235人付款" }, { goods_id: 1, img: "/static/img/goods/p2.jpg", name: "商品名称商品名称商品名称商品名称商品名称", price: "￥168", slogan: "1235人付款" }, { goods_id: 2, img: "/static/img/goods/p3.jpg", name: "商品名称商品名称商品名称商品名称商品名称", price: "￥168", slogan: "1235人付款" }, { goods_id: 3, img: "/static/img/goods/p4.jpg", name: "商品名称商品名称商品名称商品名称商品名称", price: "￥168", slogan: "1235人付款" }, { goods_id: 4, img: "/static/img/goods/p5.jpg", name: "商品名称商品名称商品名称商品名称商品名称", price: "￥168", slogan: "1235人付款" }, { goods_id: 5, img: "/static/img/goods/p6.jpg", name: "商品名称商品名称商品名称商品名称商品名称", price: "￥168", slogan: "1235人付款" }, { goods_id: 6, img: "/static/img/goods/p7.jpg", name: "商品名称商品名称商品名称商品名称商品名称", price: "￥168", slogan: "1235人付款" }, { goods_id: 7, img: "/static/img/goods/p8.jpg", name: "商品名称商品名称商品名称商品名称商品名称", price: "￥168", slogan: "1235人付款" }, { goods_id: 8, img: "/static/img/goods/p9.jpg", name: "商品名称商品名称商品名称商品名称商品名称", price: "￥168", slogan: "1235人付款" }, { goods_id: 9, img: "/static/img/goods/p10.jpg", name: "商品名称商品名称商品名称商品名称商品名称", price: "￥168", slogan: "1235人付款" }], loadingText: "正在加载..." };}, onPageScroll: function onPageScroll(e) {//兼容iOS端下拉时顶部漂移
     this.headerPosition = e.scrollTop >= 0 ? "fixed" : "absolute";this.headerTop = e.scrollTop >= 0 ? null : 0;this.statusTop = e.scrollTop >= 0 ? null : -this.statusHeight + "px";}, //下拉刷新，需要自己在page.json文件中配置开启页面下拉刷新 "enablePullDownRefresh": true
-  onPullDownRefresh: function onPullDownRefresh() {setTimeout(function () {uni.stopPullDownRefresh();}, 1000);}, //上拉加载，需要自己在page.json文件中配置"onReachBottomDistance"
-  onReachBottom: function onReachBottom() {uni.showToast({ title: "触发上拉加载" });var len = this.productList.length;if (len >= 40) {this.loadingText = "到底了";return false;} // 演示,随机加入商品,生成环境请替换为ajax请求
-    var end_goods_id = this.productList[len - 1].goods_id;for (var i = 1; i <= 10; i++) {var goods_id = end_goods_id + i;var p = { goods_id: goods_id, img: "/static/img/goods/p" + (goods_id % 10 == 0 ? 10 : goods_id % 10) + ".jpg", name: "商品名称商品名称商品名称商品名称商品名称", price: "￥168", slogan: "1235人付款" };this.productList.push(p);}}, onLoad: function onLoad() {// 获取首页nav轮播图列表
-    this.getNavList(); // 获取首页主轮播图列表
-    this.getBannerList(); // this.amapPlugin = new amap.AMapWX({
+  onPullDownRefresh: function onPullDownRefresh() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.next = 2;return _this.initData();case 2:uni.showToast({ title: "刷新成功", duration: 1000 });uni.stopPullDownRefresh();case 4:case "end":return _context.stop();}}}, _callee);}))();}, //上拉加载，需要自己在page.json文件中配置"onReachBottomDistance"
+  onReachBottom: function onReachBottom() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:_this2.pageIndex++;_context2.next = 3;return _this2.getGoodsList();case 3:uni.showToast({ title: "加载成功" });case 4:case "end":return _context2.stop();}}}, _callee2);}))();}, onLoad: function onLoad() {// 初始化数据
+    this.initData(); // this.amapPlugin = new amap.AMapWX({
     // 	//高德地图KEY，随时失效，请务必替换为自己的KEY，参考：http://ask.dcloud.net.cn/article/35070
     // 	key: '7c235a9ac4e25e482614c6b8eac6fd8e'
     // });
@@ -467,29 +446,27 @@ var _default = { data: function data() {return { showHeader: true, afterHeaderOp
     // });
     //开启定时器
     this.Timer(); //加载活动专区
-    this.loadPromotion();},
-  methods: {
-    // 获取首页主轮播图列表
-    getBannerList: function getBannerList() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.next = 2;return (
-                  _this.$API("/home/banner"));case 2:res = _context.sent;
-                if (res.code === 200) {
-                  _this.swiperList = res.data;
-                }case 4:case "end":return _context.stop();}}}, _callee);}))();
-    }, // 获取首页nav轮播图列表
-    getNavList: function getNavList() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var res, size, pages, categoryList, num;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:_context2.next = 2;return (
-                  _this2.$API("/home/mallnav"));case 2:res = _context2.sent;
-                if (res.code === 200) {
-                  size = 8;
-                  pages = math.ceil(res.data.length / size);
+    this.loadPromotion();}, methods: { // 初始化数据
+    initData: function initData() {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:_context3.next = 2;return _this3.getNavList();case 2:_context3.next = 4;return _this3.getBannerList();case 4:_context3.next = 6;return _this3.getGoodsList();case 6:case "end":return _context3.stop();}}}, _callee3);}))();}, // 获取首页主轮播图列表
+    getBannerList: function getBannerList() {var _this4 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {var res;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:_context4.next = 2;return _this4.$API("/home/banner");case 2:res = _context4.sent;if (res.code === 200) {_this4.swiperList = res.data;}case 4:case "end":return _context4.stop();}}}, _callee4);}))();}, // 获取首页nav轮播图列表
+    getNavList: function getNavList() {var _this5 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee5() {var res, size, pages, categoryList, num;return _regenerator.default.wrap(function _callee5$(_context5) {while (1) {switch (_context5.prev = _context5.next) {case 0:_context5.next = 2;return _this5.$API("/home/mallnav");case 2:res = _context5.sent;if (res.code === 200) {size = 8;pages = Math.ceil(res.data.length / size);
                   categoryList = [];
                   num = 1;
                   while (pages >= num) {
-                    res.push(res.data.slice(size * num - 1, size * num));
+                    categoryList.push(res.data.slice(size * (num - 1), size * num));
                     num++;
                   }
+                  _this5.categoryList = categoryList;
+                }case 4:case "end":return _context5.stop();}}}, _callee5);}))();
+    },
+    // 获取首页goodsList
+    getGoodsList: function getGoodsList() {var _this6 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee6() {var res;return _regenerator.default.wrap(function _callee6$(_context6) {while (1) {switch (_context6.prev = _context6.next) {case 0:_context6.next = 2;return (
+                  _this6.$API("/goods/search_goods", {
+                    pageIndex: _this6.pageIndex }));case 2:res = _context6.sent;
 
-                  _this2.categoryList = categoryList;
-                }case 4:case "end":return _context2.stop();}}}, _callee2);}))();
+                if (res.code === 200) {
+                  _this6.goodsList = _this6.goodsList.concat(res.data.goodsList);
+                }case 4:case "end":return _context6.stop();}}}, _callee6);}))();
     },
     //加载Promotion 并设定倒计时,,实际应用中应该是ajax加载此数据。
     loadPromotion: function loadPromotion() {
@@ -538,11 +515,11 @@ var _default = { data: function data() {return { showHeader: true, afterHeaderOp
       this.Promotion = tmpPromotion;
     },
     //定时器
-    Timer: function Timer() {var _this3 = this;
+    Timer: function Timer() {var _this7 = this;
       setInterval(function () {
-        if (_this3.Promotion.length > 0) {
-          for (var i = 0; i < _this3.Promotion.length; i++) {
-            var row = _this3.Promotion[i];
+        if (_this7.Promotion.length > 0) {
+          for (var i = 0; i < _this7.Promotion.length; i++) {
+            var row = _this7.Promotion[i];
             if (row.countdown) {
               if (
               !(
@@ -573,7 +550,7 @@ var _default = { data: function data() {return { showHeader: true, afterHeaderOp
                   row.countdown.m = 59;
                   row.countdown.s = 59;
                 }
-                _this3.Promotion[i].countdown = row.countdown;
+                _this7.Promotion[i].countdown = row.countdown;
               }
             }
           }

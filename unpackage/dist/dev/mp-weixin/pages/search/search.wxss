@@ -69,9 +69,14 @@
 .header .right-button {
   margin-left: 10rpx;
   height: 60rpx;
+  line-height: 60rpx;
 }
 .main {
   padding: 20rpx 30rpx 0;
+}
+.main .recentSearch,
+.main .hotSearch {
+  margin-top: 20rpx;
 }
 .main .recentSearch .top,
 .main .hotSearch .top {
