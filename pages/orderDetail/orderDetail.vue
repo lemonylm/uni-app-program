@@ -57,26 +57,24 @@
         </view>
       </view>
       <view class="buy-list">
-        <view class="row" v-for="(row, index) in orderList" :key="index">
+        <view class="row">
           <view class="goods-info">
             <text class="shopName">
               <text style="margin-right: 10upx; color: #e1251b">JD</text>
-              京东自营官方旗舰店</text
-            >
+              {{ orderInfo.brandName }}京东自营官方旗舰店
+            </text>
             <uni-icons type="arrowright" color="#555"></uni-icons>
-            <view class="container">
+            <view class="container" @click="toGoods(orderInfo.skuId)">
               <view class="img">
-                <image src="../../static/img/user/avatar.gif"></image>
+                <image :src="orderInfo.imgUrl"></image>
               </view>
               <view class="info">
-                <view class="title"
-                  >商品名称商品名称商品名称商品名称商品名称
-                </view>
-                <view class="spec"
-                  >选择{{ row.spec }} 数量:{{ row.number }}</view
-                >
+                <view class="title">{{ orderInfo.skuName }} </view>
+                <view class="spec">选择 128G 数量:{{ orderInfo.skuNum }}</view>
                 <view class="price-number">
-                  <view class="price">￥{{ row.price * row.number }}</view>
+                  <view class="price"
+                    >￥{{ orderInfo.skuPrice * orderInfo.skuNum }}</view
+                  >
                 </view>
                 <view class="btns">
                   <view>申请售后</view>
@@ -90,19 +88,25 @@
       <view class="card orderInfo">
         <view class="box">
           <view>
-            订单编号：<text class="detailinfo">123123123123</text>
+            订单编号：<text class="detailinfo">{{ orderInfo.orderId }}</text>
             <text class="copy">复制</text></view
           >
-          <view> 下单时间：<text class="detailinfo">123123123123</text> </view>
-        </view>
-        <view class="box">
-          <view> 支付方式：<text class="detailinfo">123123123123</text> </view>
-          <view> 支付时间：<text class="detailinfo">123123123123</text> </view>
-        </view>
-        <view class="box">
-          <view> 配送方式：<text class="detailinfo">123123123123</text> </view>
           <view>
-            期望配送日期：<text class="detailinfo">123123123123</text>
+            下单时间：<text class="detailinfo">{{ orderInfo.createTime }}</text>
+          </view>
+        </view>
+        <view class="box">
+          <view> 支付方式：<text class="detailinfo">微信支付</text> </view>
+          <view>
+            支付时间：<text class="detailinfo">{{ orderInfo.createTime }}</text>
+          </view>
+        </view>
+        <view class="box">
+          <view> 配送方式：<text class="detailinfo">京东配送</text> </view>
+          <view>
+            期望配送日期：<text class="detailinfo">{{
+              orderInfo.arriveTime
+            }}</text>
           </view>
         </view>
       </view>
@@ -115,13 +119,22 @@ export default {
   data() {
     return {
       showClose: true,
-      orderList: [{ name: 123 }, { name: 123 }, { name: 123 }],
+      orderInfo: {},
+      // orderList: [{ name: 123 }, { name: 123 }, { name: 123 }],
     };
   },
   methods: {
     closeNoticeBar() {
       this.showClose = false;
     },
+    toGoods(id) {
+      uni.navigateTo({
+        url: "/pages/goods/goods?skuId=" + id,
+      });
+    },
+  },
+  onLoad(option) {
+    this.orderInfo = JSON.parse(option.orderInfo);
   },
 };
 </script>
@@ -234,6 +247,9 @@ export default {
     padding: 30upx 20upx;
     .goods-info {
       width: 100%;
+      .shopName {
+        font-size: 28upx;
+      }
       .container {
         margin-top: 30upx;
         display: flex;
@@ -331,6 +347,7 @@ export default {
       }
     }
     .copy {
+      margin-left: -30upx;
       font-size: 24upx;
       display: inline-block;
       height: 30upx;

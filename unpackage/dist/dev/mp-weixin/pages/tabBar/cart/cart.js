@@ -442,7 +442,12 @@ var _default =
     },
     // 变更数量
     changeCount: function changeCount(row, num) {var _arguments = arguments,_this7 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee6() {var skuNum, res;return _regenerator.default.wrap(function _callee6$(_context6) {while (1) {switch (_context6.prev = _context6.next) {case 0:if (!(
-                num === -1 && row.skuNum === 1)) {_context6.next = 2;break;}return _context6.abrupt("return");case 2:
+                num === -1 && row.skuNum === 1)) {_context6.next = 3;break;}
+                uni.showToast({
+                  icon: "error",
+                  title: "滑动可删除商品",
+                  duration: 2000 });return _context6.abrupt("return");case 3:
+
 
 
 
@@ -450,14 +455,14 @@ var _default =
                   skuNum = row.skuNum;
                 } else {
                   skuNum = row.skuNum + num;
-                }_context6.next = 5;return (
+                }_context6.next = 6;return (
                   _this7.$API(
                   "/cart/changeSkuNum",
                   {
                     skuNum: skuNum,
                     skuId: row.skuId },
 
-                  "POST"));case 5:res = _context6.sent;
+                  "POST"));case 6:res = _context6.sent;
 
                 if (res.code === 200) {
                   row.skuNum = skuNum;
@@ -467,7 +472,7 @@ var _default =
                     title: "请再试一次",
                     duration: 2000 });
 
-                }case 7:case "end":return _context6.stop();}}}, _callee6);}))();
+                }case 8:case "end":return _context6.stop();}}}, _callee6);}))();
     } },
 
   computed: {

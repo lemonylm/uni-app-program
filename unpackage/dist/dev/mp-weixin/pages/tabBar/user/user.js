@@ -239,43 +239,78 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
     return {
       isfirst: true,
-      headerPosition: 'fixed',
+      headerPosition: "fixed",
       headerTop: null,
       statusTop: null,
       showHeader: true,
       //个人信息,
       user: {
-        username: '',
-        face: '/static/img/face.jpg',
-        signature: '请点击昵称或头像进行登录',
+        username: "",
+        face: "/static/img/face.jpg",
+        signature: "请点击昵称或头像进行登录",
         integral: 0,
         balance: 0,
         envelope: 0 },
 
       // 订单类型
       orderList: [
-      { text: '待付款', icon: 'fukuan' },
-      { text: '待发货', icon: 'fahuo' },
-      { text: '待收货', icon: 'shouhuo' },
-      { text: '待评价', icon: 'pingjia' },
-      { text: '退换货', icon: 'tuihuo' }],
+      { text: "待付款", icon: "fukuan" },
+      { text: "待发货", icon: "fahuo" },
+      { text: "待收货", icon: "shouhuo" },
+      { text: "待评价", icon: "pingjia" },
+      { text: "退换货", icon: "tuihuo" }],
 
       // 工具栏列表
       mytoolbarList: [
-      { url: '../../user/keep/keep', text: '我的收藏', img: '/static/img/user/point.png' },
-      { url: '../../user/coupon/coupon', text: '优惠券', img: '/static/img/user/quan.png' },
-      { url: '', text: '新客豪礼', img: '/static/img/user/renw.png' },
-      { url: '', text: '领红包', img: '/static/img/user/momey.png' },
+      {
+        url: "../../user/keep/keep",
+        text: "我的收藏",
+        img: "/static/img/user/point.png" },
 
-      { url: '../../user/address/address', text: '收货地址', img: '/static/img/user/addr.png' },
-      { url: '', text: '账户安全', img: '/static/img/user/security.png' },
-      { url: '', text: '银行卡', img: '/static/img/user/bank.png' },
-      { url: '', text: '抽奖', img: '/static/img/user/choujiang.png' }
+      {
+        url: "../../user/coupon/coupon",
+        text: "优惠券",
+        img: "/static/img/user/quan.png" },
+
+      { url: "", text: "新客豪礼", img: "/static/img/user/renw.png" },
+      { url: "", text: "领红包", img: "/static/img/user/momey.png" },
+
+      {
+        url: "../../user/address/address",
+        text: "收货地址",
+        img: "/static/img/user/addr.png" },
+
+      { url: "", text: "账户安全", img: "/static/img/user/security.png" },
+      { url: "", text: "银行卡", img: "/static/img/user/bank.png" },
+      { url: "", text: "抽奖", img: "/static/img/user/choujiang.png" }
       // {text:'客服',img:'/static/img/user/kefu.png'},
       // {text:'签到',img:'/static/img/user/mingxi.png'}
       ] };
@@ -289,9 +324,9 @@ var _default =
   },
   onPageScroll: function onPageScroll(e) {
     //兼容iOS端下拉时顶部漂移
-    this.headerPosition = e.scrollTop >= 0 ? 'fixed' : 'absolute';
+    this.headerPosition = e.scrollTop >= 0 ? "fixed" : "absolute";
     this.headerTop = e.scrollTop >= 0 ? null : 0;
-    this.statusTop = e.scrollTop >= 0 ? null : -this.statusHeight + 'px';
+    this.statusTop = e.scrollTop >= 0 ? null : -this.statusHeight + "px";
   },
   onLoad: function onLoad() {
     this.statusHeight = 0;
@@ -311,7 +346,7 @@ var _default =
   // },
   onShow: function onShow() {var _this = this;
     uni.getStorage({
-      key: 'UserInfo',
+      key: "UserInfo",
       success: function success(res) {
         if (!res.data) {
           if (_this.isfirst) {
@@ -330,35 +365,37 @@ var _default =
     //消息列表
     toMsg: function toMsg() {return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
                 uni.navigateTo({
-                  url: '../../msg/msg' });
+                  url: "../../msg/msg" });
 
 
                 //await	this.$API('/users/login_token',{},'post')
               case 1:case "end":return _context.stop();}}}, _callee);}))();},
     toOrderList: function toOrderList(index) {
-      uni.setStorageSync('tbIndex', index);
-      uni.navigateTo({ url: '../../user/order_list/order_list?tbIndex=' + index });
+      //   uni.setStorageSync("tbIndex", index);
+      uni.navigateTo({
+        url: "../../user/order_list/order_list?tbIndex=" + index });
+
     },
     toSetting: function toSetting() {
       uni.navigateTo({
-        url: '../../user/setting/setting' });
+        url: "../../user/setting/setting" });
 
     },
     toMyQR: function toMyQR() {
       uni.navigateTo({
-        url: '../../user/myQR/myQR' });
+        url: "../../user/myQR/myQR" });
 
     },
     toLogin: function toLogin() {
-      uni.showToast({ title: '请登录', icon: 'none' });
+      uni.showToast({ title: "请登录", icon: "none" });
       uni.navigateTo({
-        url: '../../login/login?redirect=/pages/tabBar/user/user' });
+        url: "../../login/login?redirect=/pages/tabBar/user/user" });
 
       this.isfirst = false;
     },
     isLogin: function isLogin() {
       //实际应用中,用户登录状态应该用token等方法去维持登录状态.
-      var value = uni.getStorageSync('UserInfo');
+      var value = uni.getStorageSync("UserInfo");
       if (value) {
         return true;
       }
@@ -366,12 +403,12 @@ var _default =
     },
     toDeposit: function toDeposit() {
       uni.navigateTo({
-        url: '../../user/deposit/deposit' });
+        url: "../../user/deposit/deposit" });
 
     },
     toPage: function toPage(url) {
       if (!url) {
-        uni.showToast({ title: '模板未包含此页面', icon: 'none' });
+        uni.showToast({ title: "模板未包含此页面", icon: "none" });
         return;
       }
       uni.navigateTo({

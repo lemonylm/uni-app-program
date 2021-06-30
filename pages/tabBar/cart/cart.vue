@@ -302,6 +302,11 @@ export default {
     // 变更数量
     async changeCount(row, num) {
       if (num === -1 && row.skuNum === 1) {
+        uni.showToast({
+          icon: "error",
+          title: "滑动可删除商品",
+          duration: 2000,
+        });
         return;
       }
       let skuNum;

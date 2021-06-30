@@ -141,6 +141,9 @@
 .buy-list .row .goods-info {
   width: 100%;
 }
+.buy-list .row .goods-info .shopName {
+  font-size: 28rpx;
+}
 .buy-list .row .goods-info .container {
   margin-top: 30rpx;
   display: -webkit-box;
@@ -261,6 +264,7 @@
   font-weight: bold;
 }
 .orderInfo .box .copy {
+  margin-left: -30rpx;
   font-size: 24rpx;
   display: inline-block;
   height: 30rpx;
