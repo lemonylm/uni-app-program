@@ -19,7 +19,7 @@
       <view class="tis" v-if="goodsList.length == 0">购物车是空的哦~</view>
       <view class="row" v-for="(row, index) in goodsList" :key="index">
         <!-- 删除按钮 -->
-        <view class="menu" @tap.stop="deleteGoods(index)">
+        <view class="menu" @tap.stop="deleteGoods(index, row)">
           <view class="icon shanchu"></view>
         </view>
         <!-- 商品 -->
@@ -39,23 +39,27 @@
             </view>
           </view>
           <!-- 商品信息 -->
-          <view class="goods-info" @tap="toGoods(row)">
+          <view class="goods-info">
             <view class="img">
-              <image :src="row.imgUrl"></image>
+              <image @tap="toGoods(row)" :src="row.imgUrl"></image>
             </view>
             <view class="info">
-              <view class="title">{{ row.skuName }}</view>
+              <view @tap="toGoods(row)" class="title">{{ row.skuName }}</view>
               <view class="spec">规格:{{ row.brandName }}</view>
               <view class="price-number">
                 <view class="price">￥{{ row.skuPrice }}</view>
                 <view class="number">
-                  <view class="sub" @tap.stop="sub(index)">
+                  <view class="sub" @tap.stop="changeCount(row, 1)">
                     <view class="icon jian"></view>
                   </view>
-                  <view class="input" @tap.stop="discard">
-                    <input type="number" v-model.number="row.skuNum" />
+                  <view class="input">
+                    <input
+                      type="number"
+                      v-model.number="row.skuNum"
+                      @change.stop="changeCount(row)"
+                    />
                   </view>
-                  <view class="add" @tap.stop="add(index)">
+                  <view class="add" @tap.stop="changeCount(row, 1)">
                     <view class="icon jia"></view>
                   </view>
                 </view>
@@ -212,12 +216,8 @@ export default {
     //跳转确认订单页面
     toConfirmation() {
       let tmpList = [];
-      let len = this.goodsList.length;
-      for (let i = 0; i < len; i++) {
-        if (this.goodsList[i].selected) {
-          tmpList.push(this.goodsList[i]);
-        }
-      }
+      // let len = this.goodsList.length;
+      tmpList = this.goodsList.map((item) => item.isChecked === 1);
       if (tmpList.length < 1) {
         uni.showToast({
           title: "请选择商品结算",
@@ -225,41 +225,97 @@ export default {
         });
         return;
       }
-      uni.setStorage({
-        key: "buylist",
-        data: tmpList,
-        success: () => {
-          uni.navigateTo({
-            url: "../../order/confirmation",
-          });
-        },
+      uni.navigateTo({
+        url: `../../order/confirmation?goodsList=${this.goodsList}&totalPrice=${this.totalPrice}`,
       });
     },
     //删除商品
-    deleteGoods(index) {
-      this.goodsList.splice(index, 1);
+    async deleteGoods(index, row) {
+      const res = await this.$API(
+        "/cart/deleteOneCart?skuId=" + row.skuId,
+        {},
+        "delete"
+      );
+      if (res.code === 200) {
+        this.goodsList.splice(index, 1);
+        uni.showToast({
+          title: "删除成功",
+          duration: 2000,
+        });
+      } else {
+        uni.showToast({
+          icon: "error",
+          title: "请再试一次",
+          duration: 2000,
+        });
+      }
     },
-    // 选中商品
-    selected(row) {
-      row.isChecked = row.isChecked === 1 ? 0 : 1;
+    // 选中单个商品
+    async selected(row) {
+      const res = await this.$API(
+        "/cart/checkOneCart",
+        { skuId: row.skuId, isChecked: row.isChecked === 1 ? 0 : 1 },
+        "POST"
+      );
+      if (res.code === 200) {
+        row.isChecked = row.isChecked === 1 ? 0 : 1;
+      } else {
+        uni.showToast({
+          icon: "error",
+          title: "请勿重复点击",
+          duration: 2000,
+        });
+      }
     },
     //全选
-    allSelect() {
+    async allSelect() {
       let status = this.isAllselected;
-      this.goodsList.forEach((item) => {
-        item.isChecked = status ? 0 : 1;
-      });
-    },
-    // 减少数量
-    sub(index) {
-      if (this.goodsList[index].skuNum <= 1) {
-        return;
+      const res = await this.$API(
+        "/cart/checkAllCart",
+        { isChecked: status ? 0 : 1 },
+        "POST"
+      );
+      if (res.code === 200) {
+        this.goodsList.forEach((item) => {
+          item.isChecked = status ? 0 : 1;
+        });
+      } else {
+        uni.showToast({
+          icon: "error",
+          title: "请勿重复点击",
+          duration: 2000,
+        });
       }
-      this.goodsList[index].skuNum--;
     },
-    // 增加数量
-    add(index) {
-      this.goodsList[index].skuNum++;
+    // 变更数量
+    async changeCount(row, num) {
+      console.log(1);
+      if (row.skuNum <= 1) {
+        row.skuNum = 1;
+      }
+      let skuNum;
+      if (arguments.length === 1) {
+        skuNum = row.skuNum;
+      } else {
+        skuNum = row.skuNum + num;
+      }
+      const res = await this.$API(
+        "/cart/changeSkuNum",
+        {
+          skuNum,
+          skuId: row.skuId,
+        },
+        "POST"
+      );
+      if (res.code === 200) {
+        row.skuNum = skuNum;
+      } else {
+        uni.showToast({
+          icon: "error",
+          title: "请再试一次",
+          duration: 2000,
+        });
+      }
     },
   },
   computed: {

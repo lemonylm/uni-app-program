@@ -229,6 +229,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
@@ -353,12 +357,8 @@ var _default =
     //跳转确认订单页面
     toConfirmation: function toConfirmation() {
       var tmpList = [];
-      var len = this.goodsList.length;
-      for (var i = 0; i < len; i++) {
-        if (this.goodsList[i].selected) {
-          tmpList.push(this.goodsList[i]);
-        }
-      }
+      // let len = this.goodsList.length;
+      tmpList = this.goodsList.map(function (item) {return item.isChecked === 1;});
       if (tmpList.length < 1) {
         uni.showToast({
           title: "请选择商品结算",
@@ -366,41 +366,97 @@ var _default =
 
         return;
       }
-      uni.setStorage({
-        key: "buylist",
-        data: tmpList,
-        success: function success() {
-          uni.navigateTo({
-            url: "../../order/confirmation" });
-
-        } });
+      uni.navigateTo({
+        url: "../../order/confirmation?goodsList=".concat(this.goodsList, "&totalPrice=").concat(this.totalPrice) });
 
     },
     //删除商品
-    deleteGoods: function deleteGoods(index) {
-      this.goodsList.splice(index, 1);
+    deleteGoods: function deleteGoods(index, row) {var _this4 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var res;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:_context3.next = 2;return (
+                  _this4.$API(
+                  "/cart/deleteOneCart?skuId=" + row.skuId,
+                  {},
+                  "delete"));case 2:res = _context3.sent;
+
+                if (res.code === 200) {
+                  _this4.goodsList.splice(index, 1);
+                  uni.showToast({
+                    title: "删除成功",
+                    duration: 2000 });
+
+                } else {
+                  uni.showToast({
+                    icon: "error",
+                    title: "请再试一次",
+                    duration: 2000 });
+
+                }case 4:case "end":return _context3.stop();}}}, _callee3);}))();
     },
-    // 选中商品
-    selected: function selected(row) {
-      row.isChecked = row.isChecked === 1 ? 0 : 1;
+    // 选中单个商品
+    selected: function selected(row) {var _this5 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {var res;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:_context4.next = 2;return (
+                  _this5.$API(
+                  "/cart/checkOneCart",
+                  { skuId: row.skuId, isChecked: row.isChecked === 1 ? 0 : 1 },
+                  "POST"));case 2:res = _context4.sent;
+
+                if (res.code === 200) {
+                  row.isChecked = row.isChecked === 1 ? 0 : 1;
+                } else {
+                  uni.showToast({
+                    icon: "error",
+                    title: "请勿重复点击",
+                    duration: 2000 });
+
+                }case 4:case "end":return _context4.stop();}}}, _callee4);}))();
     },
     //全选
-    allSelect: function allSelect() {
-      var status = this.isAllselected;
-      this.goodsList.forEach(function (item) {
-        item.isChecked = status ? 0 : 1;
-      });
+    allSelect: function allSelect() {var _this6 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee5() {var status, res;return _regenerator.default.wrap(function _callee5$(_context5) {while (1) {switch (_context5.prev = _context5.next) {case 0:
+                status = _this6.isAllselected;_context5.next = 3;return (
+                  _this6.$API(
+                  "/cart/checkAllCart",
+                  { isChecked: status ? 0 : 1 },
+                  "POST"));case 3:res = _context5.sent;
+
+                if (res.code === 200) {
+                  _this6.goodsList.forEach(function (item) {
+                    item.isChecked = status ? 0 : 1;
+                  });
+                } else {
+                  uni.showToast({
+                    icon: "error",
+                    title: "请勿重复点击",
+                    duration: 2000 });
+
+                }case 5:case "end":return _context5.stop();}}}, _callee5);}))();
     },
-    // 减少数量
-    sub: function sub(index) {
-      if (this.goodsList[index].skuNum <= 1) {
-        return;
-      }
-      this.goodsList[index].skuNum--;
-    },
-    // 增加数量
-    add: function add(index) {
-      this.goodsList[index].skuNum++;
+    // 变更数量
+    changeCount: function changeCount(row, num) {var _arguments = arguments,_this7 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee6() {var skuNum, res;return _regenerator.default.wrap(function _callee6$(_context6) {while (1) {switch (_context6.prev = _context6.next) {case 0:
+                console.log(1);
+                if (row.skuNum <= 1) {
+                  row.skuNum = 1;
+                }
+
+                if (_arguments.length === 1) {
+                  skuNum = row.skuNum;
+                } else {
+                  skuNum = row.skuNum + num;
+                }_context6.next = 5;return (
+                  _this7.$API(
+                  "/cart/changeSkuNum",
+                  {
+                    skuNum: skuNum,
+                    skuId: row.skuId },
+
+                  "POST"));case 5:res = _context6.sent;
+
+                if (res.code === 200) {
+                  row.skuNum = skuNum;
+                } else {
+                  uni.showToast({
+                    icon: "error",
+                    title: "请再试一次",
+                    duration: 2000 });
+
+                }case 7:case "end":return _context6.stop();}}}, _callee6);}))();
     } },
 
   computed: {

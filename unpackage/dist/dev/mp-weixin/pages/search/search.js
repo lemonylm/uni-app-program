@@ -180,6 +180,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
@@ -234,6 +241,35 @@ var _default =
 
 
                 _this2.inputVal = "";case 15:case "end":return _context2.stop();}}}, _callee2);}))();
+    },
+    // 点击卡片跳转
+    cardSearch: function cardSearch(e) {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var keyword, index, res;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
+                keyword = e.target.dataset.name;if (!
+                keyword) {_context3.next = 11;break;}
+                index = _this3.recentList.findIndex(function (item) {return item === keyword;});
+                if (index >= 0) {
+                  _this3.recentList.splice(index, 1);
+                }
+                _this3.recentList.unshift(keyword);
+                wx.setStorageSync("RECENT_LIST", _this3.recentList);
+                // 发送请求 跳转的逻辑
+                _this3.$store.commit("REMOVE_GOODS_LIST");_context3.next = 9;return (
+                  _this3.$store.dispatch("getGoodsList", {
+                    keyword: keyword }));case 9:res = _context3.sent;
+
+                if (res) {
+                  uni.navigateTo({
+                    url: "/pages/goods/goods-list/goods-list?name=".concat(keyword) });
+
+                } else {
+                  uni.showToast({
+                    icon: "error",
+                    title: "搜索失败",
+                    duration: 2000 });
+
+                }case 11:
+
+                _this3.inputVal = "";case 12:case "end":return _context3.stop();}}}, _callee3);}))();
     },
     // 删除
     remove: function remove() {

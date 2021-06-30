@@ -20,10 +20,14 @@
           <text class="title">最近搜索</text>
           <text class="icon shanchu" @click="remove"></text>
         </view>
-        <view class="content">
-          <text class="card" v-for="(item, index) in recentList" :key="index">{{
-            item
-          }}</text>
+        <view class="content" @click="cardSearch">
+          <text
+            class="card"
+            :data-name="item"
+            v-for="(item, index) in recentList"
+            :key="index"
+            >{{ item }}</text
+          >
         </view>
       </view>
       <view class="hotSearch">
@@ -33,10 +37,13 @@
             isShow ? "隐藏" : "显示"
           }}</text>
         </view>
-        <view class="content" v-if="isShow"
-          ><text class="card" v-for="(item, index) in hotList">{{
-            item
-          }}</text></view
+        <view class="content" @click="cardSearch" v-if="isShow"
+          ><text
+            :data-name="item"
+            class="card"
+            v-for="(item, index) in hotList"
+            >{{ item }}</text
+          ></view
         >
       </view>
     </view>
@@ -95,6 +102,35 @@ export default {
           title: "请勿输入空信息",
           icon: "error",
         });
+      }
+      this.inputVal = "";
+    },
+    // 点击卡片跳转
+    async cardSearch(e) {
+      let keyword = e.target.dataset.name;
+      if (keyword) {
+        const index = this.recentList.findIndex((item) => item === keyword);
+        if (index >= 0) {
+          this.recentList.splice(index, 1);
+        }
+        this.recentList.unshift(keyword);
+        wx.setStorageSync("RECENT_LIST", this.recentList);
+        // 发送请求 跳转的逻辑
+        this.$store.commit("REMOVE_GOODS_LIST");
+        const res = await this.$store.dispatch("getGoodsList", {
+          keyword,
+        });
+        if (res) {
+          uni.navigateTo({
+            url: `/pages/goods/goods-list/goods-list?name=${keyword}`,
+          });
+        } else {
+          uni.showToast({
+            icon: "error",
+            title: "搜索失败",
+            duration: 2000,
+          });
+        }
       }
       this.inputVal = "";
     },

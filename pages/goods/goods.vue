@@ -13,7 +13,7 @@
         <view class="middle"></view>
         <view class="icon-btn">
           <view class="icon tongzhi" @tap="toMsg"></view>
-          <view class="icon cart" @tap="joinCart"></view>
+          <view class="icon cart" @tap="toCart"></view>
         </view>
       </view>
       <!-- 头部-滚动渐变显示 -->
@@ -234,9 +234,9 @@
     <!-- 详情 -->
     <view class="description">
       <view class="title">———— 商品详情 ————</view>
-      <view class="content"
-        ><rich-text :nodes="descriptionStr"></rich-text
-      ></view>
+      <view class="content" v-for="(swiper, index) in imageList" :key="index">
+        <image :src="swiper.url"></image>
+      </view>
     </view>
   </view>
 </template>
@@ -262,7 +262,15 @@ export default {
       specClass: "", //规格弹窗css类，控制开关动画
       shareClass: "", //分享弹窗css类，控制开关动画
       // 商品信息
-      goodsInfo: {},
+      goodsInfo: {
+        comments: 0,
+        imageInfo: {},
+        priceInfo: {
+          price: 0,
+        },
+        skuId: 0,
+        skuName: "",
+      },
       goodsData: {
         id: 1,
         name: "商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题",
@@ -282,11 +290,8 @@ export default {
             "很不错，之前买了很多次了，很好看，能放很久，和图片色差不大，值得购买！",
         },
       },
-      selectSpec: null, //选中规格
+      selectSpec: "128G", //选中规格
       isKeep: false, //收藏
-      //商品描述html
-      descriptionStr:
-        '<div style="text-align:center;"><img width="100%" src="https://ae01.alicdn.com/kf/HTB1t0fUl_Zmx1VjSZFGq6yx2XXa5.jpg"/><img width="100%" src="https://ae01.alicdn.com/kf/HTB1LzkjThTpK1RjSZFKq6y2wXXaT.jpg"/><img width="100%" src="https://ae01.alicdn.com/kf/HTB18dkiTbvpK1RjSZPiq6zmwXXa8.jpg"/></div>',
     };
   },
   onLoad(option) {
@@ -319,7 +324,7 @@ export default {
   },
   //上拉加载，需要自己在page.json文件中配置"onReachBottomDistance"
   onReachBottom() {
-    uni.showToast({ title: "触发上拉加载" });
+
   },
   computed: {
     // 轮播图列表
@@ -334,6 +339,12 @@ export default {
       if (res.code === 200) {
         this.goodsInfo = res.data;
       }
+    },
+    // 上方点击图标跳转至购物车
+    toCart() {
+      uni.reLaunch({
+        url: "/pages/tabBar/cart/cart",
+      });
     },
     //轮播图指示器
     swiperChange(event) {
@@ -366,13 +377,18 @@ export default {
       this.isKeep = this.isKeep ? false : true;
     },
     // 加入购物车
-    joinCart() {
-      if (this.selectSpec == null) {
-        return this.showSpec(() => {
-          uni.showToast({ title: "已加入购物车" });
+    async joinCart() {
+      const res = await this.$API(
+        "/cart/addToCart",
+        { skuId: this.goodsInfo.skuId },
+        "PUT"
+      );
+      if (res.code === 200) {
+        uni.showToast({
+          title: "添加购物车成功",
+          duration: 2000,
         });
       }
-      uni.showToast({ title: "已加入购物车" });
     },
     //立即购买
     buy() {

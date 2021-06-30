@@ -1,6 +1,5 @@
 {
-	"pages": [
-		{
+	"pages": [{
 			"path": "pages/tabBar/home/home",
 			"style": {
 				"navigationBarTextStyle": "black",
@@ -9,13 +8,11 @@
 				"app-plus": {
 					"titleNView": false,
 					"softinputNavBar": "none",
-					"subNVues": [
-						{
-							"id": "homeTitleNvue",
-							"path": "pages/tabBar/home/subNvue/homeTitleNvue",
-							"type": "navigationBar"
-						}
-					]
+					"subNVues": [{
+						"id": "homeTitleNvue",
+						"path": "pages/tabBar/home/subNvue/homeTitleNvue",
+						"type": "navigationBar"
+					}]
 				}
 			}
 		},
@@ -37,13 +34,11 @@
 				"app-plus": {
 					"titleNView": false,
 					"softinputNavBar": "none",
-					"subNVues": [
-						{
-							"id": "cartTitleNvue",
-							"path": "pages/tabBar/cart/subNvue/cartTitleNvue",
-							"type": "navigationBar"
-						}
-					]
+					"subNVues": [{
+						"id": "cartTitleNvue",
+						"path": "pages/tabBar/cart/subNvue/cartTitleNvue",
+						"type": "navigationBar"
+					}]
 				}
 			}
 		},
@@ -57,13 +52,11 @@
 				"navigationBarTextStyle": "white",
 				"app-plus": {
 					"titleNView": false,
-					"subNVues": [
-						{
-							"id": "userTitleNvue",
-							"path": "pages/tabBar/user/subNvue/userTitleNvue",
-							"type": "navigationBar"
-						}
-					]
+					"subNVues": [{
+						"id": "userTitleNvue",
+						"path": "pages/tabBar/user/subNvue/userTitleNvue",
+						"type": "navigationBar"
+					}]
 				}
 			}
 		},
@@ -264,8 +257,21 @@
 			"path": "pages/search/search",
 			"style": {
 				"navigationBarTitleText": "搜索",
-				"enablePullDownRefresh": false
+				"enablePullDownRefresh": false,
+				"backgroundColorBottom": "#ffffff"
 			}
+		}, {
+			"path": "pages/orderDetail/orderDetail",
+			"style": {
+				"navigationBarTitleText": "订单详情",
+				"enablePullDownRefresh": false,
+				"backgroundColorTop": "#f06c7a",
+				"backgroundColorBottom": "#ffffff",
+				"navigationBarBackgroundColor": "#fb3b12",
+				"navigationBarTextStyle": "white"
+				
+			}
+
 		}
 	],
 	"globalStyle": {
@@ -281,8 +287,7 @@
 		"selectedColor": "#f06c7a",
 		"borderStyle": "black",
 		"backgroundColor": "#ffffff",
-		"list": [
-			{
+		"list": [{
 				"pagePath": "pages/tabBar/home/home",
 				"iconPath": "static/img/tabBar/home.png",
 				"selectedIconPath": "static/img/tabBar/home-on.png",
@@ -310,7 +315,7 @@
 	},
 	"permission": {
 		"scope.userLocation": {
-		  "desc": "你的位置信息将用于小程序位置接口的效果展示"
+			"desc": "你的位置信息将用于小程序位置接口的效果展示"
 		}
 	}
 }

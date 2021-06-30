@@ -394,7 +394,15 @@ var _default =
       specClass: "", //规格弹窗css类，控制开关动画
       shareClass: "", //分享弹窗css类，控制开关动画
       // 商品信息
-      goodsInfo: {},
+      goodsInfo: {
+        comments: 0,
+        imageInfo: {},
+        priceInfo: {
+          price: 0 },
+
+        skuId: 0,
+        skuName: "" },
+
       goodsData: {
         id: 1,
         name: "商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题",
@@ -414,12 +422,9 @@ var _default =
           "很不错，之前买了很多次了，很好看，能放很久，和图片色差不大，值得购买！" } },
 
 
-      selectSpec: null, //选中规格
-      isKeep: false, //收藏
-      //商品描述html
-      descriptionStr:
-      '<div style="text-align:center;"><img width="100%" src="https://ae01.alicdn.com/kf/HTB1t0fUl_Zmx1VjSZFGq6yx2XXa5.jpg"/><img width="100%" src="https://ae01.alicdn.com/kf/HTB1LzkjThTpK1RjSZFKq6y2wXXaT.jpg"/><img width="100%" src="https://ae01.alicdn.com/kf/HTB18dkiTbvpK1RjSZPiq6zmwXXa8.jpg"/></div>' };
-
+      selectSpec: "128G", //选中规格
+      isKeep: false //收藏
+    };
   },
   onLoad: function onLoad(option) {
     this.initData(option.skuId);
@@ -451,7 +456,7 @@ var _default =
   },
   //上拉加载，需要自己在page.json文件中配置"onReachBottomDistance"
   onReachBottom: function onReachBottom() {
-    uni.showToast({ title: "触发上拉加载" });
+
   },
   computed: {
     // 轮播图列表
@@ -466,6 +471,12 @@ var _default =
                 if (res.code === 200) {
                   _this.goodsInfo = res.data;
                 }case 4:case "end":return _context.stop();}}}, _callee);}))();
+    },
+    // 上方点击图标跳转至购物车
+    toCart: function toCart() {
+      uni.reLaunch({
+        url: "/pages/tabBar/cart/cart" });
+
     },
     //轮播图指示器
     swiperChange: function swiperChange(event) {
@@ -498,19 +509,24 @@ var _default =
       this.isKeep = this.isKeep ? false : true;
     },
     // 加入购物车
-    joinCart: function joinCart() {
-      if (this.selectSpec == null) {
-        return this.showSpec(function () {
-          uni.showToast({ title: "已加入购物车" });
-        });
-      }
-      uni.showToast({ title: "已加入购物车" });
+    joinCart: function joinCart() {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var res;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:_context2.next = 2;return (
+                  _this3.$API(
+                  "/cart/addToCart",
+                  { skuId: _this3.goodsInfo.skuId },
+                  "PUT"));case 2:res = _context2.sent;
+
+                if (res.code === 200) {
+                  uni.showToast({
+                    title: "添加购物车成功",
+                    duration: 2000 });
+
+                }case 4:case "end":return _context2.stop();}}}, _callee2);}))();
     },
     //立即购买
-    buy: function buy() {var _this3 = this;
+    buy: function buy() {var _this4 = this;
       if (this.selectSpec == null) {
         return this.showSpec(function () {
-          _this3.toConfirmation();
+          _this4.toConfirmation();
         });
       }
       this.toConfirmation();
@@ -569,7 +585,7 @@ var _default =
 
     },
     //计算锚点高度
-    calcAnchor: function calcAnchor() {var _this4 = this;
+    calcAnchor: function calcAnchor() {var _this5 = this;
       this.anchorlist = [
       { name: "主图", top: 0 },
       { name: "评价", top: 0 },
@@ -584,8 +600,8 @@ var _default =
 
 
         var headerHeight = uni.upx2px(100);
-        _this4.anchorlist[1].top = data.top - headerHeight - statusbarHeight;
-        _this4.anchorlist[2].top = data.bottom - headerHeight - statusbarHeight;
+        _this5.anchorlist[1].top = data.top - headerHeight - statusbarHeight;
+        _this5.anchorlist[2].top = data.bottom - headerHeight - statusbarHeight;
       }).
       exec();
     },
@@ -599,10 +615,10 @@ var _default =
       this.serviceClass = "show";
     },
     //关闭服务弹窗
-    hideService: function hideService() {var _this5 = this;
+    hideService: function hideService() {var _this6 = this;
       this.serviceClass = "hide";
       setTimeout(function () {
-        _this5.serviceClass = "none";
+        _this6.serviceClass = "none";
       }, 200);
     },
     //规格弹窗
@@ -615,14 +631,14 @@ var _default =
       return;
     },
     //关闭规格弹窗
-    hideSpec: function hideSpec() {var _this6 = this;
+    hideSpec: function hideSpec() {var _this7 = this;
       this.specClass = "hide";
       //回调
 
       this.selectSpec && this.specCallback && this.specCallback();
       this.specCallback = false;
       setTimeout(function () {
-        _this6.specClass = "none";
+        _this7.specClass = "none";
       }, 200);
     },
     discard: function discard() {

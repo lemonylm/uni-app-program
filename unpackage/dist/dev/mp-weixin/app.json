@@ -23,7 +23,9 @@
     "pages/pay/payment/payment",
     "pages/pay/success/success",
     "pages/goods/ratings/ratings",
-    "pages/search/search"
+    "pages/search/search",
+    "pages/orderDetail/orderDetail"
+
   ],
   "subPackages": [],
   "window": {
@@ -39,8 +41,7 @@
     "selectedColor": "#f06c7a",
     "borderStyle": "black",
     "backgroundColor": "#ffffff",
-    "list": [
-      {
+    "list": [{
         "pagePath": "pages/tabBar/home/home",
         "iconPath": "static/img/tabBar/home.png",
         "selectedIconPath": "static/img/tabBar/home-on.png",
