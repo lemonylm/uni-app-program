@@ -19,7 +19,7 @@
       <view class="tis" v-if="goodsList.length == 0">购物车是空的哦~</view>
       <view class="row" v-for="(row, index) in goodsList" :key="index">
         <!-- 删除按钮 -->
-        <view class="menu" @tap.stop="deleteGoods(index, row)">
+        <view class="menu" @tap.stop="deleteGoods(row)">
           <view class="icon shanchu"></view>
         </view>
         <!-- 商品 -->
@@ -236,14 +236,20 @@ export default {
       });
     },
     //删除商品
-    async deleteGoods(index, row) {
+    async deleteGoods(row) {
+      console.log(this.goodsList);
+      console.log(row.skuId);
       const res = await this.$API(
         "/cart/deleteOneCart?skuId=" + row.skuId,
         {},
         "delete"
       );
       if (res.code === 200) {
-        this.goodsList.splice(index, 1);
+        this.theIndex = null;
+        this.oldIndex = null;
+        this.goodsList = this.goodsList.filter(
+          (item) => item.skuId !== row.skuId
+        );
         uni.showToast({
           title: "删除成功",
           duration: 2000,

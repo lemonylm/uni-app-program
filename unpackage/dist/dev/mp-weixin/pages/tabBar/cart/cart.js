@@ -377,14 +377,20 @@ var _default =
 
     },
     //删除商品
-    deleteGoods: function deleteGoods(index, row) {var _this4 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var res;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:_context3.next = 2;return (
+    deleteGoods: function deleteGoods(row) {var _this4 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var res;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
+                console.log(_this4.goodsList);
+                console.log(row.skuId);_context3.next = 4;return (
                   _this4.$API(
                   "/cart/deleteOneCart?skuId=" + row.skuId,
                   {},
-                  "delete"));case 2:res = _context3.sent;
+                  "delete"));case 4:res = _context3.sent;
 
                 if (res.code === 200) {
-                  _this4.goodsList.splice(index, 1);
+                  _this4.theIndex = null;
+                  _this4.oldIndex = null;
+                  _this4.goodsList = _this4.goodsList.filter(
+                  function (item) {return item.skuId !== row.skuId;});
+
                   uni.showToast({
                     title: "删除成功",
                     duration: 2000 });
@@ -395,7 +401,7 @@ var _default =
                     title: "请再试一次",
                     duration: 2000 });
 
-                }case 4:case "end":return _context3.stop();}}}, _callee3);}))();
+                }case 6:case "end":return _context3.stop();}}}, _callee3);}))();
     },
     // 选中单个商品
     selected: function selected(row) {var _this5 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {var res;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:_context4.next = 2;return (
