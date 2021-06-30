@@ -104,8 +104,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 var _default =
 {
   data: function data() {
@@ -330,7 +328,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  var f0 = _vm._f("toFixed")(_vm.deduction)
+  var f0 = _vm._f("toFixed")(12)
 
   var f1 = _vm._f("toFixed")(_vm.goodsPrice)
 

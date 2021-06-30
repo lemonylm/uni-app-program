@@ -49,7 +49,7 @@
               <view class="price-number">
                 <view class="price">￥{{ row.skuPrice }}</view>
                 <view class="number">
-                  <view class="sub" @tap.stop="changeCount(row, 1)">
+                  <view class="sub" @tap.stop="changeCount(row, -1)">
                     <view class="icon jian"></view>
                   </view>
                   <view class="input">
@@ -295,9 +295,8 @@ export default {
     },
     // 变更数量
     async changeCount(row, num) {
-      console.log(1);
-      if (row.skuNum <= 1) {
-        row.skuNum = 1;
+      if (num === -1 && row.skuNum === 1) {
+        return;
       }
       let skuNum;
       if (arguments.length === 1) {

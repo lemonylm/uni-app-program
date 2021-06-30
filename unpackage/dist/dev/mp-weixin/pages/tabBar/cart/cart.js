@@ -435,11 +435,10 @@ var _default =
                 }case 5:case "end":return _context5.stop();}}}, _callee5);}))();
     },
     // 变更数量
-    changeCount: function changeCount(row, num) {var _arguments = arguments,_this7 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee6() {var skuNum, res;return _regenerator.default.wrap(function _callee6$(_context6) {while (1) {switch (_context6.prev = _context6.next) {case 0:
-                console.log(1);
-                if (row.skuNum <= 1) {
-                  row.skuNum = 1;
-                }
+    changeCount: function changeCount(row, num) {var _arguments = arguments,_this7 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee6() {var skuNum, res;return _regenerator.default.wrap(function _callee6$(_context6) {while (1) {switch (_context6.prev = _context6.next) {case 0:if (!(
+                num === -1 && row.skuNum === 1)) {_context6.next = 2;break;}return _context6.abrupt("return");case 2:
+
+
 
                 if (_arguments.length === 1) {
                   skuNum = row.skuNum;
