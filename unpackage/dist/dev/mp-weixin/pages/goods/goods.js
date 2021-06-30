@@ -455,9 +455,7 @@ var _default =
     this.afterHeaderzIndex = e.scrollTop > 0 ? 11 : 10;
   },
   //上拉加载，需要自己在page.json文件中配置"onReachBottomDistance"
-  onReachBottom: function onReachBottom() {
-
-  },
+  onReachBottom: function onReachBottom() {},
   computed: {
     // 轮播图列表
     imageList: function imageList() {
@@ -522,39 +520,27 @@ var _default =
 
                 }case 4:case "end":return _context2.stop();}}}, _callee2);}))();
     },
-    //立即购买
-    buy: function buy() {var _this4 = this;
-      if (this.selectSpec == null) {
-        return this.showSpec(function () {
-          _this4.toConfirmation();
-        });
-      }
-      this.toConfirmation();
-    },
-    //商品评论
-    toRatings: function toRatings() {
-      uni.navigateTo({
-        url: "ratings/ratings" });
-
-    },
-    //跳转确认订单页面
-    toConfirmation: function toConfirmation() {
-      var tmpList = [];
-      var goods = {
-        id: this.goodsData.id,
-        img: "../../static/img/goods/p1.jpg",
-        name: this.goodsData.name,
+    //立即购买 /跳转确认订单页面
+    buy: function buy() {
+      var goodsList = [
+      {
+        id: this.goodsInfo.skuId,
+        imgUrl: this.goodsInfo.imageInfo.whiteImage,
+        brandName: this.goodsInfo.skuName,
         spec: "规格:" + this.goodsData.spec[this.selectSpec],
-        price: this.goodsData.price,
-        number: this.goodsData.number };
+        skuPrice: this.goodsInfo.priceInfo.price,
+        skuNum: 1 }];
 
-      tmpList.push(goods);
+
       uni.setStorage({
-        key: "buylist",
-        data: tmpList,
+        key: "orderInfo",
+        data: {
+          goodsList: goodsList,
+          totalPrice: goodsList[0].price },
+
         success: function success() {
           uni.navigateTo({
-            url: "../order/confirmation" });
+            url: "/pages/order/confirmation" });
 
         } });
 
@@ -585,7 +571,7 @@ var _default =
 
     },
     //计算锚点高度
-    calcAnchor: function calcAnchor() {var _this5 = this;
+    calcAnchor: function calcAnchor() {var _this4 = this;
       this.anchorlist = [
       { name: "主图", top: 0 },
       { name: "评价", top: 0 },
@@ -600,8 +586,8 @@ var _default =
 
 
         var headerHeight = uni.upx2px(100);
-        _this5.anchorlist[1].top = data.top - headerHeight - statusbarHeight;
-        _this5.anchorlist[2].top = data.bottom - headerHeight - statusbarHeight;
+        _this4.anchorlist[1].top = data.top - headerHeight - statusbarHeight;
+        _this4.anchorlist[2].top = data.bottom - headerHeight - statusbarHeight;
       }).
       exec();
     },
@@ -615,10 +601,10 @@ var _default =
       this.serviceClass = "show";
     },
     //关闭服务弹窗
-    hideService: function hideService() {var _this6 = this;
+    hideService: function hideService() {var _this5 = this;
       this.serviceClass = "hide";
       setTimeout(function () {
-        _this6.serviceClass = "none";
+        _this5.serviceClass = "none";
       }, 200);
     },
     //规格弹窗
@@ -631,14 +617,14 @@ var _default =
       return;
     },
     //关闭规格弹窗
-    hideSpec: function hideSpec() {var _this7 = this;
+    hideSpec: function hideSpec() {var _this6 = this;
       this.specClass = "hide";
       //回调
 
       this.selectSpec && this.specCallback && this.specCallback();
       this.specCallback = false;
       setTimeout(function () {
-        _this7.specClass = "none";
+        _this6.specClass = "none";
       }, 200);
     },
     discard: function discard() {

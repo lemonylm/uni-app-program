@@ -217,7 +217,7 @@ export default {
     toConfirmation() {
       let tmpList = [];
       // let len = this.goodsList.length;
-      tmpList = this.goodsList.map((item) => item.isChecked === 1);
+      tmpList = this.goodsList.filter((item) => item.isChecked === 1);
       if (tmpList.length < 1) {
         uni.showToast({
           title: "请选择商品结算",
@@ -225,8 +225,17 @@ export default {
         });
         return;
       }
-      uni.navigateTo({
-        url: `../../order/confirmation?goodsList=${this.goodsList}&totalPrice=${this.totalPrice}`,
+      uni.setStorage({
+        key: "orderInfo",
+        data: {
+          goodsList: tmpList,
+          totalPrice: this.totalPrice,
+        },
+        success: function () {
+          uni.navigateTo({
+            url: `../../order/confirmation`,
+          });
+        },
       });
     },
     //删除商品

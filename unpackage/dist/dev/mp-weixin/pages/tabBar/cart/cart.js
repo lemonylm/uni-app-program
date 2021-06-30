@@ -358,7 +358,7 @@ var _default =
     toConfirmation: function toConfirmation() {
       var tmpList = [];
       // let len = this.goodsList.length;
-      tmpList = this.goodsList.map(function (item) {return item.isChecked === 1;});
+      tmpList = this.goodsList.filter(function (item) {return item.isChecked === 1;});
       if (tmpList.length < 1) {
         uni.showToast({
           title: "请选择商品结算",
@@ -366,8 +366,17 @@ var _default =
 
         return;
       }
-      uni.navigateTo({
-        url: "../../order/confirmation?goodsList=".concat(this.goodsList, "&totalPrice=").concat(this.totalPrice) });
+      uni.setStorage({
+        key: "orderInfo",
+        data: {
+          goodsList: tmpList,
+          totalPrice: this.totalPrice },
+
+        success: function success() {
+          uni.navigateTo({
+            url: "../../order/confirmation" });
+
+        } });
 
     },
     //删除商品

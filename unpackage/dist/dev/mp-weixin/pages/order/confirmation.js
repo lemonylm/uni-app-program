@@ -106,24 +106,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 var _default =
 {
   data: function data() {
@@ -131,43 +113,44 @@ var _default =
       buylist: [], //订单列表
       goodsPrice: 0.0, //商品合计价格
       sumPrice: 0.0, //用户付款价格
-      freight: 12.00, //运费
-      note: '', //备注
+      freight: 12.0, //运费
+      note: "", //备注
       int: 1200, //抵扣积分
       deduction: 0, //抵扣价格
-      recinfo: { id: 1, name: "大黑哥", head: "大", tel: "18816881688", address: { region: { "label": "广东省-深圳市-福田区", "value": [18, 2, 1], "cityCode": "440304" }, detailed: '深南大道1111号无名摩登大厦6楼A2' }, isDefault: true } };
+      recinfo: {
+        id: 1,
+        name: "Mistletoe",
+        head: "大",
+        tel: "18616881688",
+        address: {
+          region: {
+            label: "天津市-滨海新区-滨海新区",
+            value: [18, 2, 1],
+            cityCode: "440304" },
+
+          detailed: "滨海新区第三大街" },
+
+        isDefault: true } };
 
 
   },
   onShow: function onShow() {var _this = this;
     //页面显示时，加载订单信息
+    var orderInfo = uni.getStorageSync("orderInfo");
+    this.buylist = orderInfo.goodsList;
+    this.sumPrice = orderInfo.totalPrice;
+    this.goodsPrice = orderInfo.totalPrice;
     uni.getStorage({
-      key: 'buylist',
-      success: function success(ret) {
-        _this.buylist = ret.data;
-        _this.goodsPrice = 0;
-        //合计
-        var len = _this.buylist.length;
-        for (var i = 0; i < len; i++) {
-          _this.goodsPrice = _this.goodsPrice + _this.buylist[i].number * _this.buylist[i].price;
-        }
-        _this.deduction = _this.int / 100;
-        _this.sumPrice = _this.goodsPrice - _this.deduction + _this.freight;
-      } });
-
-    uni.getStorage({
-      key: 'selectAddress',
+      key: "selectAddress",
       success: function success(e) {
         _this.recinfo = e.data;
         uni.removeStorage({
-          key: 'selectAddress' });
+          key: "selectAddress" });
 
       } });
 
   },
-  onHide: function onHide() {
-
-  },
+  onHide: function onHide() {},
   onBackPress: function onBackPress() {
     //页面后退时候，清除订单信息
     this.clearOrder();
@@ -180,48 +163,41 @@ var _default =
   methods: {
     clearOrder: function clearOrder() {var _this2 = this;
       uni.removeStorage({
-        key: 'buylist',
+        key: "buylist",
         success: function success(res) {
           _this2.buylist = [];
-          console.log('remove buylist success');
+          console.log("remove buylist success");
         } });
 
     },
     toPay: function toPay() {var _this3 = this;
       //商品列表
-      var paymentOrder = [];
       var goodsid = [];
       var len = this.buylist.length;
-      for (var i = 0; i < len; i++) {
-        paymentOrder.push(this.buylist[i]);
-        goodsid.push(this.buylist[i].id);
-      }
-      if (paymentOrder.length == 0) {
-        uni.showToast({ title: '订单信息有误，请重新购买', icon: 'none' });
-        return;
+      if (len) {
+        this.buylist.forEach(function (item) {return goodsid.push(item.id);});
       }
       //本地模拟订单提交UI效果
       uni.showLoading({
-        title: '正在提交订单...' });
+        title: "正在提交订单..." });
 
       setTimeout(function () {
         uni.setStorage({
-          key: 'paymentOrder',
-          data: paymentOrder,
+          key: "skuIdList",
+          data: goodsid,
           success: function success() {
             uni.hideLoading();
             uni.redirectTo({
-              url: "../pay/payment/payment?amount=" + _this3.sumPrice });
+              url: "../pay/payment/payment?amount=".concat(_this3.sumPrice) });
 
           } });
 
       }, 1000);
-
     },
     //选择收货地址
     selectAddress: function selectAddress() {
       uni.navigateTo({
-        url: '../user/address/address?type=select' });
+        url: "../user/address/address?type=select" });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
@@ -362,7 +338,7 @@ var render = function() {
 
   var f3 = _vm._f("toFixed")(_vm.deduction)
 
-  var f4 = _vm._f("toFixed")(_vm.sumPrice)
+  var f4 = _vm._f("toFixed")(_vm.goodsPrice)
 
   _vm.$mp.data = Object.assign(
     {},

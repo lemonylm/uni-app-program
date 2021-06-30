@@ -323,9 +323,7 @@ export default {
     this.afterHeaderzIndex = e.scrollTop > 0 ? 11 : 10;
   },
   //上拉加载，需要自己在page.json文件中配置"onReachBottomDistance"
-  onReachBottom() {
-
-  },
+  onReachBottom() {},
   computed: {
     // 轮播图列表
     imageList() {
@@ -390,39 +388,27 @@ export default {
         });
       }
     },
-    //立即购买
+    //立即购买 /跳转确认订单页面
     buy() {
-      if (this.selectSpec == null) {
-        return this.showSpec(() => {
-          this.toConfirmation();
-        });
-      }
-      this.toConfirmation();
-    },
-    //商品评论
-    toRatings() {
-      uni.navigateTo({
-        url: "ratings/ratings",
-      });
-    },
-    //跳转确认订单页面
-    toConfirmation() {
-      let tmpList = [];
-      let goods = {
-        id: this.goodsData.id,
-        img: "../../static/img/goods/p1.jpg",
-        name: this.goodsData.name,
-        spec: "规格:" + this.goodsData.spec[this.selectSpec],
-        price: this.goodsData.price,
-        number: this.goodsData.number,
-      };
-      tmpList.push(goods);
+      let goodsList = [
+        {
+          id: this.goodsInfo.skuId,
+          imgUrl: this.goodsInfo.imageInfo.whiteImage,
+          brandName: this.goodsInfo.skuName,
+          spec: "规格:" + this.goodsData.spec[this.selectSpec],
+          skuPrice: this.goodsInfo.priceInfo.price,
+          skuNum: 1,
+        },
+      ];
       uni.setStorage({
-        key: "buylist",
-        data: tmpList,
-        success: () => {
+        key: "orderInfo",
+        data: {
+          goodsList,
+          totalPrice: goodsList[0].price,
+        },
+        success: function () {
           uni.navigateTo({
-            url: "../order/confirmation",
+            url: `/pages/order/confirmation`,
           });
         },
       });
