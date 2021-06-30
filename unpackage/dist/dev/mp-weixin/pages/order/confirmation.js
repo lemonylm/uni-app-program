@@ -175,7 +175,7 @@ var _default =
       var goodsid = [];
       var len = this.buylist.length;
       if (len) {
-        this.buylist.forEach(function (item) {return goodsid.push(item.id);});
+        this.buylist.forEach(function (item) {return goodsid.push(item.skuId);});
       }
       //本地模拟订单提交UI效果
       uni.showLoading({
@@ -336,7 +336,7 @@ var render = function() {
 
   var f2 = _vm._f("toFixed")(_vm.freight)
 
-  var f3 = _vm._f("toFixed")(_vm.deduction)
+  var f3 = _vm._f("toFixed")(12)
 
   var f4 = _vm._f("toFixed")(_vm.goodsPrice)
 

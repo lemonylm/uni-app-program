@@ -122,7 +122,7 @@
       <view class="product-list">
         <view
           class="product"
-          v-for="(product,index) in goodsList"
+          v-for="(product, index) in goodsList"
           :key="index"
           @tap="toGoods(product)"
         >
@@ -450,9 +450,8 @@ export default {
     },
     //商品跳转
     toGoods(e) {
-      uni.showToast({ title: "商品" + e.goods_id, icon: "none" });
       uni.navigateTo({
-        url: "../../goods/goods",
+        url: "../../goods/goods?skuId=" + e.skuId,
       });
     },
     //轮播图指示器

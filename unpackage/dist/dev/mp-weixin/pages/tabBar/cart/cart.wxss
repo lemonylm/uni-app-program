@@ -351,6 +351,10 @@ page {
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
           justify-content: space-between;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: reverse;
+  -webkit-flex-direction: row-reverse;
+          flex-direction: row-reverse;
   -webkit-box-align: center;
   -webkit-align-items: center;
           align-items: center;

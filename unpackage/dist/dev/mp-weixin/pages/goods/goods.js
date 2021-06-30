@@ -416,8 +416,8 @@ var _default =
         spec: ["XS", "S", "M", "L", "XL", "XXL"],
         comment: {
           number: 102,
-          userface: "../../static/img/face.jpg",
-          username: "大黑哥",
+          userface: "../../static/img/user/avatar.gif",
+          username: "Mistletoe",
           content:
           "很不错，之前买了很多次了，很好看，能放很久，和图片色差不大，值得购买！" } },
 
@@ -524,9 +524,9 @@ var _default =
     buy: function buy() {
       var goodsList = [
       {
-        id: this.goodsInfo.skuId,
+        skuId: this.goodsInfo.skuId,
         imgUrl: this.goodsInfo.imageInfo.whiteImage,
-        brandName: this.goodsInfo.skuName,
+        skuName: this.goodsInfo.skuName,
         spec: "规格:" + this.goodsData.spec[this.selectSpec],
         skuPrice: this.goodsInfo.priceInfo.price,
         skuNum: 1 }];
@@ -536,7 +536,7 @@ var _default =
         key: "orderInfo",
         data: {
           goodsList: goodsList,
-          totalPrice: goodsList[0].price },
+          totalPrice: goodsList[0].skuPrice },
 
         success: function success() {
           uni.navigateTo({

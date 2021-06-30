@@ -71,15 +71,6 @@
     </view>
     <!-- 脚部菜单 -->
     <view class="footer" :style="{ bottom: footerbottom }">
-      <view class="checkbox-box" @tap="allSelect">
-        <view class="checkbox">
-          <view :class="[isAllselected ? 'on' : '']"></view>
-        </view>
-        <view class="text">全选</view>
-      </view>
-      <view class="delBtn" @tap="deleteList" v-if="selectedList.length > 0"
-        >删除</view
-      >
       <view class="settlement">
         <view class="sum"
           >合计:<view class="money"
@@ -87,6 +78,12 @@
           ></view
         >
         <view class="btn" @tap="toConfirmation">结算({{ selectedCount }})</view>
+      </view>
+      <view v-if="goodsList.length" class="checkbox-box" @tap="allSelect">
+        <view class="checkbox">
+          <view :class="[isAllselected ? 'on' : '']"></view>
+        </view>
+        <view class="text">全选</view>
       </view>
     </view>
   </view>
@@ -596,6 +593,7 @@ page {
   height: 100upx;
   display: flex;
   justify-content: space-between;
+  flex-direction: row-reverse;
   align-items: center;
   font-size: 28upx;
   position: fixed;

@@ -139,13 +139,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 16));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};} //
 //
 //
 //
@@ -200,43 +194,55 @@ var _default =
   data: function data() {
     return {
       amount: 0,
-      orderName: '',
-      paytype: 'alipay' //支付类型
-    };
+      orderName: "",
+      paytype: "alipay", //支付类型
+      skuIdList: [] };
+
   },
   onLoad: function onLoad(e) {var _this = this;
     this.amount = parseFloat(e.amount).toFixed(2);
     uni.getStorage({
-      key: 'paymentOrder',
+      key: "skuIdList",
       success: function success(e) {
+        _this.skuIdList = e.data;
         if (e.data.length > 1) {
-          _this.orderName = '多商品合并支付';
+          _this.orderName = "多商品合并支付";
         } else {
-          _this.orderName = e.data[0].name;
+          _this.orderName = e.data[0].brandName;
         }
-        uni.removeStorage({
-          key: 'paymentOrder' });
-
       } });
 
   },
   methods: {
-    doDeposit: function doDeposit() {var _this2 = this;
-      //模板模拟支付，实际应用请调起微信/支付宝
-      uni.showLoading({
-        title: '支付中...' });
+    doDeposit: function doDeposit() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+                //模板模拟支付，实际应用请调起微信/支付宝
+                uni.showLoading({
+                  title: "支付中..." });_context.next = 3;return (
 
-      setTimeout(function () {
-        uni.hideLoading();
-        uni.showToast({
-          title: '支付成功' });
+                  _this2.$API(
+                  "/order/addOrders",
+                  { skuIdList: _this2.skuIdList },
+                  "PUT"));case 3:res = _context.sent;
 
-        setTimeout(function () {
-          uni.redirectTo({
-            url: '../../pay/success/success?amount=' + _this2.amount });
+                if (res.code === 200) {
+                  uni.showToast({
+                    title: "支付成功" });
 
-        }, 300);
-      }, 700);
+                  uni.removeStorage({
+                    key: "skuIdList" });
+
+                  setTimeout(function () {
+                    uni.redirectTo({
+                      url: "../../pay/success/success?amount=" + _this2.amount });
+
+                  }, 300);
+                } else {
+                  uni.showToast({
+                    icon: "error",
+                    title: "支付成功" });
+
+                }
+                uni.hideLoading();case 6:case "end":return _context.stop();}}}, _callee);}))();
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

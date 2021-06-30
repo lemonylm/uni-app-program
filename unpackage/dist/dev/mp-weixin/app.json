@@ -40,8 +40,7 @@
     "selectedColor": "#f06c7a",
     "borderStyle": "black",
     "backgroundColor": "#ffffff",
-    "list": [
-      {
+    "list": [{
         "pagePath": "pages/tabBar/home/home",
         "iconPath": "static/img/tabBar/home.png",
         "selectedIconPath": "static/img/tabBar/home-on.png",

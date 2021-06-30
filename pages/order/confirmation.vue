@@ -29,7 +29,7 @@
           </view>
           <view class="info">
             <view class="title">{{ row.brandName }}</view>
-            <view class="spec">选择{{ row.spec }} 数量:{{ row.skuNum }}</view>
+            <view class="spec">选择:128G 数量:{{ row.skuNum }}</view>
             <view class="price-number">
               <view class="price">￥{{ row.skuPrice * row.skuNum }}</view>
               <view class="number"> </view>
@@ -65,7 +65,7 @@
       </view>
       <view class="row">
         <view class="nominal"> 积分抵扣 </view>
-        <view class="content"> ￥-{{ deduction | toFixed }} </view>
+        <view class="content"> ￥-{{ 12 | toFixed }} </view>
       </view>
     </view>
     <view class="blck"> </view>
@@ -149,7 +149,7 @@ export default {
       let goodsid = [];
       let len = this.buylist.length;
       if (len) {
-        this.buylist.forEach((item) => goodsid.push(item.id));
+        this.buylist.forEach((item) => goodsid.push(item.skuId));
       }
       //本地模拟订单提交UI效果
       uni.showLoading({
