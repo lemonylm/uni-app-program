@@ -386,6 +386,15 @@ export default {
           title: "添加购物车成功",
           duration: 2000,
         });
+      } else if (res.code === 201) {
+        uni.removeStorage({
+          key: "Token",
+          success: function () {
+            uni.navigateTo({
+              url: "/pages/login/login",
+            });
+          },
+        });
       }
     },
     //立即购买 /跳转确认订单页面

@@ -239,7 +239,7 @@ var _default =
                 } else {
                   uni.showToast({
                     icon: "error",
-                    title: "支付成功" });
+                    title: "支付失败" });
 
                 }
                 uni.hideLoading();case 6:case "end":return _context.stop();}}}, _callee);}))();

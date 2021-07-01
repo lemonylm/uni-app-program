@@ -518,6 +518,15 @@ var _default =
                     title: "添加购物车成功",
                     duration: 2000 });
 
+                } else if (res.code === 201) {
+                  uni.removeStorage({
+                    key: "Token",
+                    success: function success() {
+                      uni.navigateTo({
+                        url: "/pages/login/login" });
+
+                    } });
+
                 }case 4:case "end":return _context2.stop();}}}, _callee2);}))();
     },
     //立即购买 /跳转确认订单页面

@@ -266,22 +266,15 @@ var _amapWx = _interopRequireDefault(__webpack_require__(/*! @/common/SDK/amap-w
     showCategory: function showCategory(id) {
       this.showCategoryId = id;
     },
-    toCategory: function toCategory(e) {var _this4 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {var res;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:
-                _this4.$store.commit("REMOVE_GOODS_LIST");_context4.next = 3;return (
-                  _this4.$store.dispatch("getCategoryGoodsList", {
-                    category3Id: e.id }));case 3:res = _context4.sent;
+    // 去分类列表
+    toCategory: function toCategory(e) {var _this4 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:
+                _this4.$store.commit("REMOVE_GOODS_LIST");
+                _this4.$store.dispatch("getCategoryGoodsList", {
+                  category3Id: e.id });
 
-                if (res) {
-                  uni.navigateTo({
-                    url: "/pages/goods/goods-list/goods-list?name=".concat(e.name, "&id=").concat(e.id) });
+                uni.navigateTo({
+                  url: "/pages/goods/goods-list/goods-list?name=".concat(e.name, "&id=").concat(e.id) });case 3:case "end":return _context4.stop();}}}, _callee4);}))();
 
-                } else {
-                  uni.showToast({
-                    icon: "error",
-                    title: "获取数据失败",
-                    duration: 2000 });
-
-                }case 5:case "end":return _context4.stop();}}}, _callee4);}))();
     },
     //搜索跳转
     toSearch: function toSearch() {

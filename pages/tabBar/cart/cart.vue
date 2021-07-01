@@ -16,7 +16,12 @@
     <view v-if="showHeader" class="place"></view>
     <!-- 商品列表 -->
     <view class="goods-list">
-      <view class="tis" v-if="goodsList.length == 0">购物车是空的哦~</view>
+      <view class="back" v-if="isExpire">
+        <button type="primary" @click="toLogin">去登录</button></view
+      >
+      <view class="tis" v-if="!isExpire && goodsList.length == 0"
+        >购物车是空的哦~</view
+      >
       <view class="row" v-for="(row, index) in goodsList" :key="index">
         <!-- 删除按钮 -->
         <view class="menu" @tap.stop="deleteGoods(row)">
@@ -103,6 +108,7 @@ export default {
       theIndex: null,
       oldIndex: null,
       isStop: false,
+      isExpire: false,
     };
   },
   onPageScroll(e) {
@@ -145,8 +151,11 @@ export default {
     async getCartList() {
       const res = await this.$API("/cart/getCart");
       if (res.code === 200) {
+        this.isExpire = false;
         this.goodsList = res.data.cartList;
       } else if (res.code === 201) {
+        this.isExpire = true;
+        this.goodsList = [];
         uni.showToast({
           icon: "error",
           title: "请登录后再试",
@@ -237,8 +246,6 @@ export default {
     },
     //删除商品
     async deleteGoods(row) {
-      console.log(this.goodsList);
-      console.log(row.skuId);
       const res = await this.$API(
         "/cart/deleteOneCart?skuId=" + row.skuId,
         {},
@@ -332,6 +339,17 @@ export default {
           duration: 2000,
         });
       }
+    },
+    // token过期去登录并清除storage
+    toLogin() {
+      uni.removeStorage({
+        key: "Token",
+        success: function () {
+          uni.navigateTo({
+            url: "/pages/login/login",
+          });
+        },
+      });
     },
   },
   computed: {
@@ -644,6 +662,14 @@ page {
 
       border-radius: 30upx;
     }
+  }
+}
+.back {
+  button {
+    font-size: 36upx;
+    color: #fff;
+    font-weight: bold;
+    width: 100%;
   }
 }
 </style>

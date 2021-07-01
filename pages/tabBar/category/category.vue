@@ -134,22 +134,15 @@ export default {
     showCategory(id) {
       this.showCategoryId = id;
     },
+    // 去分类列表
     async toCategory(e) {
       this.$store.commit("REMOVE_GOODS_LIST");
-      const res = await this.$store.dispatch("getCategoryGoodsList", {
+      this.$store.dispatch("getCategoryGoodsList", {
         category3Id: e.id,
       });
-      if (res) {
-        uni.navigateTo({
-          url: `/pages/goods/goods-list/goods-list?name=${e.name}&id=${e.id}`,
-        });
-      } else {
-        uni.showToast({
-          icon: "error",
-          title: "获取数据失败",
-          duration: 2000,
-        });
-      }
+      uni.navigateTo({
+        url: `/pages/goods/goods-list/goods-list?name=${e.name}&id=${e.id}`,
+      });
     },
     //搜索跳转
     toSearch() {

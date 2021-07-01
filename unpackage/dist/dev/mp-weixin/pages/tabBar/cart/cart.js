@@ -230,6 +230,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
@@ -243,7 +248,8 @@ var _default =
       //控制滑动效果
       theIndex: null,
       oldIndex: null,
-      isStop: false };
+      isStop: false,
+      isExpire: false };
 
   },
   onPageScroll: function onPageScroll(e) {
@@ -286,8 +292,11 @@ var _default =
     getCartList: function getCartList() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var res;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:_context2.next = 2;return (
                   _this2.$API("/cart/getCart"));case 2:res = _context2.sent;
                 if (res.code === 200) {
+                  _this2.isExpire = false;
                   _this2.goodsList = res.data.cartList;
                 } else if (res.code === 201) {
+                  _this2.isExpire = true;
+                  _this2.goodsList = [];
                   uni.showToast({
                     icon: "error",
                     title: "请登录后再试",
@@ -377,13 +386,11 @@ var _default =
 
     },
     //删除商品
-    deleteGoods: function deleteGoods(row) {var _this4 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var res;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
-                console.log(_this4.goodsList);
-                console.log(row.skuId);_context3.next = 4;return (
+    deleteGoods: function deleteGoods(row) {var _this4 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var res;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:_context3.next = 2;return (
                   _this4.$API(
                   "/cart/deleteOneCart?skuId=" + row.skuId,
                   {},
-                  "delete"));case 4:res = _context3.sent;
+                  "delete"));case 2:res = _context3.sent;
 
                 if (res.code === 200) {
                   _this4.theIndex = null;
@@ -401,7 +408,7 @@ var _default =
                     title: "请再试一次",
                     duration: 2000 });
 
-                }case 6:case "end":return _context3.stop();}}}, _callee3);}))();
+                }case 4:case "end":return _context3.stop();}}}, _callee3);}))();
     },
     // 选中单个商品
     selected: function selected(row) {var _this5 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {var res;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:_context4.next = 2;return (
@@ -473,6 +480,17 @@ var _default =
                     duration: 2000 });
 
                 }case 8:case "end":return _context6.stop();}}}, _callee6);}))();
+    },
+    // token过期去登录并清除storage
+    toLogin: function toLogin() {
+      uni.removeStorage({
+        key: "Token",
+        success: function success() {
+          uni.navigateTo({
+            url: "/pages/login/login" });
+
+        } });
+
     } },
 
   computed: {

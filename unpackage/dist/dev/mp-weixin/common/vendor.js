@@ -2061,8 +2061,8 @@ function normalizeComponent (
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;function _default(url) {var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};var method = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "GET";
   return new Promise(function (resolve, reject) {
     wx.request({
-      // url: "http://192.168.25.34:3000" + url,
-      url: "http://wendy.ngrok2.xiaomiqiu.cn" + url,
+      url: "http://192.168.25.31:3000" + url,
+      // url: "http://wendy.ngrok2.xiaomiqiu.cn" + url,
       data: data,
       method: method,
       header: {
